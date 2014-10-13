@@ -18,10 +18,19 @@ I want to **customize** my backend to fit my client's needs. Naming conventions 
 
 **Performance** is very important because especially on mobile phones you have a limited bandwidth. Most of the existing solutions load plenty of vendor shit that makes your backend slow. Actually often you only need a fraction of all the things that are loaded. I directly read/write to the filesystem. No Database. Everything is loaded asynchronously with Javascript.
 
+### Tools
+- [Gumby Framework](http://gumbyframework.com/) - CSS framework
+- [JQuery](http://jquery.com/) - Javascript library
 
 
 Setup
 -----
+
+### System requirements
+- PHP 5.2.17 or higher
+- Write permissions in `/data/modules` folder
+
+### Getting started
 0. Clone/copy repository
 0. Create a user
 0. Create a module
