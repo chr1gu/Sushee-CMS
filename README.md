@@ -10,6 +10,13 @@ About
 -----
 Sushee CMS has a few key features and goals.
 
+Having a backend that is **simple** to setup and maintain is mostly the reason why I created this project. Almost all famous solutions out there have several dependencies and imply regular updates which is time-consuming. I'm not going into details here but all those updates have several annoying drawbacks.
+
+I want to **customize** my backend to fit my client's needs. Naming conventions and data changes all the time and this needs to be a no-brainer.
+
+**Performance** is very important because especially on mobile phones you have a limited bandwidth. Most of the existing solutions load plenty of vendor shit that makes your backend slow. Actually often you only need a fraction of all the things that are loaded. I directly read/write to the filesystem. No Database. Everything is loaded asynchronously with Javascript.
+
+
 
 Setup
 -----
