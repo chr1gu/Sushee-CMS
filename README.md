@@ -90,7 +90,7 @@ hash | The hash is a derivation of data used to authenticate. It represents your
 
     {
         "name": "Rating",
-        "id": "select",
+        "id": "rating",
         "placeholder": "- Choose -",
         "type": "select",
         "values": [
