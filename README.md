@@ -12,13 +12,10 @@ About
 -----
 Sushee CMS has a few key features and principles to make my life easier.
 
-It is **simple** to setup and maintain. It has almost no dependencies. It doesn't need all those time-consuming updates and you can backup your data easily by just copying the `data` folder. Check the [system requirements](#system-requirements) section for details.
-
-You can **customize** it easily to fit your client needs. You can add & remove data attributes on the fly. You can extend existing modules or build your own.
-
-It is really **fast** and performing effectively. All the usual vendor scripts bloat your application and make it slow but often you just need a fraction of all the things that are loaded. Sushee directly writes data to the filesystem. No database necessary. Everything is loaded asynchronously with Javascript.
-
-It has a small footprint and is open source :)
+- It is **simple** to setup and maintain. It has almost no dependencies. It doesn't need all those time-consuming updates and you can backup your data easily by just copying the `data` folder. Check the [system requirements](#system-requirements) section for details.
+- You can **customize** it easily to fit your client needs. You can add & remove data attributes on the fly. You can extend existing modules or build your own.
+- It is really **fast** and performing effectively. All the usual vendor scripts bloat your application and make it slow but often you just need a fraction of all the things that are loaded. Sushee directly writes data to the filesystem. No database necessary. Everything is loaded asynchronously with Javascript.
+- It has a small footprint and is open source :)
 
 
 ### Tools
