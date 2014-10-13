@@ -6,6 +6,8 @@ A JSON based content management system. **Work in progress!**
 > This whole thing is just a first prototype. Don't use it, things might change a lot and there will be a heavy
 > cleanup iteration soon! There will be a roadmap soon.
 
+![alt text](https://raw.githubusercontent.com/chrigu-ebert/Sushee-CMS/master/web/admin/facebook.png "Logo")
+
 About
 -----
 Sushee CMS has a few key features and goals.
