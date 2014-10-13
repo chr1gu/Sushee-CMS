@@ -1,0 +1,132 @@
+/******** GENERAL ********/
+table {
+    background-color: #ffffff;
+    background-color: rgba(255,255,255,0.9);
+}
+table.striped tr:nth-of-type(even), table table tr.stripe, table table tr.striped {
+    background-color: #e5e5e5;
+    background-color: rgba(220,220, 220,0.6);
+}
+body {
+    background-color: #eeeeee;
+}
+
+/******** LOGIN ********/
+.logo {
+    margin: 90px auto 10px;
+    text-indent: -9999px;
+    outline: none;
+    overflow: hidden;
+    display: block;
+    background-image: url(../img/sushee-chef.png);
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 274px 63px;
+    width: 274px;
+    height: 63px;
+}
+.login-box {
+    padding: 20px;
+    margin: 0;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.13);
+}
+.login-box .alert {
+    overflow: hidden;
+    transition-duration: 0.3s;
+    height: 28px;
+}
+.login-box .hidden {
+    height: 0;
+    border: 0;
+    opacity: 0;
+}
+.help {
+    padding: 10px 0 50px 0;
+    text-align: center;
+    font-size: 80%;
+}
+.help a {
+    color: #999999;
+}
+
+/******** ADMIN GENERAL ********/
+body.admin-overview {
+    background-color: #eeeeee;
+}
+#admin-content {
+    background-image: url(../img/sushee-footer.svg);
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-color: #eeeeee;
+    padding-top: 40px;
+    margin-left:150px;
+}
+.side-navigation-container {
+    float:left;
+    width: 150px;
+}
+.side-navigation {
+    margin-top: 20px;
+}
+.side-navigation li {
+    position: relative;
+}
+.side-navigation a {
+    width: 100%;
+    display: block;
+    padding: 3px 10px 3px 0px;
+    font-weight: bold;
+    color: #ffffff;
+}
+.side-navigation a:hover {
+    background-color: #111;
+}
+.side-navigation li.active a {
+    background-color: #3cb878;
+}
+.side-navigation li.active a:after {
+    right: 0;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border-width: 8px;
+    margin-top: 5px;
+    border-right-color: #eeeeee;
+}
+.drawer {
+    background-color: #222222;
+    box-shadow: none;
+    font-weight: bold;
+}
+
+/******** MODULE LIST ********/
+.list-thumb {
+    width: 150px;
+    height: 100px;
+}
+
+/******** MODULE DETAIL ********/
+.image-preview {
+    display: inline-block;
+    width:100%;
+}
+.hide {
+    display: none;
+}
+
+
+/*  ----------- Smartphones (portrait) ----------- */
+@media only screen and (max-width : 440px) {
+    #admin-content {
+        margin-left:40px;
+    }
+    .side-navigation-container {
+        width: 40px;
+    }
+    .side-navigation span {
+        display: none;
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "users": [
+        {
+            "name": "test",
+            "role": "tester",
+            "display_name": "Testbenutzer",
+            "salt": "VpRiVlR7Nfc39-tDR4c5n(*v_VXCy65Kj09UqqJURb28F_FXAztMlG97quzofqoI",
+            "hash": "77d3283d4646639797a5439e6cbc8f9149acb7ab05bee67286d25bb974f42599",
+            "password": ""
+        }
+    ]
+}
