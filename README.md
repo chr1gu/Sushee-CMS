@@ -58,6 +58,26 @@ hash | The hash is a derivation of data used to authenticate. It represents your
 
 #### Basic Module
 
+    {
+        "id": "contact",
+        "name": "Contact",
+        "single": true,
+        "fields": [
+            {
+                "name": "Name",
+                "id": "name",
+                "placeholder": "",
+                "type": "text"
+            },
+            {
+                "name": "Message",
+                "id": "message",
+                "placeholder": "",
+                "type": "textarea"
+            }
+        ]
+    }
+
 
 #### Custom icons
 
