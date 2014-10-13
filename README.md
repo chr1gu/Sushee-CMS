@@ -1,7 +1,7 @@
 Sushee CMS
 ==========
 
-A JSON based content management system. **Work in progress!!**
+**Work in progress!!**
 
 Don't waste your time..
 - building a custom web-application backend
