@@ -12,7 +12,7 @@ About
 -----
 Sushee CMS has a few key features and principles to make my life easier.
 
-It is **simple** to setup and maintain. It has almost no dependencies. It doesn't need all those time-consuming updates and you can backup your data easily by just copying the `data` folder. Check the system requirements section for details.
+It is **simple** to setup and maintain. It has almost no dependencies. It doesn't need all those time-consuming updates and you can backup your data easily by just copying the `data` folder. Check the [system requirements](#system-requirements) section for details.
 
 You can **customize** it easily to fit your client needs. You can add & remove data attributes on the fly. You can extend existing modules or build your own.
 
