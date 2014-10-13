@@ -1,10 +1,12 @@
 Sushee CMS
 ==========
 
-A JSON based content management system. **Work in progress!**
+A JSON based content management system. **Work in progress!!**
 
-> This whole thing is just a first prototype. Don't use it, things might change a lot and there will be a heavy
-> cleanup iteration soon! There will be a roadmap soon.
+> Don't waste your time..
+> - building a custom web-application backend
+> - tailoring an existing solution to fit your needs
+> - applying security patches and vendor updates
 
 ![alt text](https://raw.githubusercontent.com/chrigu-ebert/Sushee-CMS/master/web/admin/facebook.png "Logo")
 
@@ -18,9 +20,9 @@ Sushee CMS has a few key features and principles to make life easier.
 - It has a small footprint and is open source :)
 
 
-### Relies on
-- [Gumby Framework](http://gumbyframework.com/) - CSS framework
-- [JQuery](http://jquery.com/) - Javascript library
+### Built with
+- [Gumby Framework](http://gumbyframework.com/) - Clean and sexy css framework
+- [JQuery](http://jquery.com/) - The Javascript library we all know
 
 
 Setup
