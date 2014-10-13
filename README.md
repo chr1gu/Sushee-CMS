@@ -3,10 +3,10 @@ Sushee CMS
 
 A JSON based content management system. **Work in progress!!**
 
-> Don't waste your time..
-> - building a custom web-application backend
-> - tailoring an existing solution to fit your needs
-> - applying security patches and vendor updates
+Don't waste your time..
+- building a custom web-application backend
+- tailoring an existing solution to fit your needs
+- applying security patches and vendor updates
 
 ![alt text](https://raw.githubusercontent.com/chrigu-ebert/Sushee-CMS/master/web/admin/facebook.png "Logo")
 
