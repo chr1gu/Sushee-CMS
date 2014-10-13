@@ -18,7 +18,7 @@ Sushee CMS has a few key features and principles to make life easier.
 - It has a small footprint and is open source :)
 
 
-### Tools
+### Relies on
 - [Gumby Framework](http://gumbyframework.com/) - CSS framework
 - [JQuery](http://jquery.com/) - Javascript library
 
