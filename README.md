@@ -3,10 +3,12 @@ Sushee CMS
 
 **Work in progress!!**
 
-Don't waste time..
-- building a custom web-application backend
+A small and highly customizable content management system to build JSON APIs.
+
+Sushee helps you to *not* waste time...
+- building a custom web-application backend from scratch
 - tailoring an existing solution to fit your needs
-- applying security patches and vendor updates
+- applying security patches and vendor updates to your existing backend
 - reading through endless documentation & code
 
 ![alt text](https://raw.githubusercontent.com/chrigu-ebert/Sushee-CMS/master/web/admin/facebook.png "Logo")
