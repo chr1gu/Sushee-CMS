@@ -1,7 +1,7 @@
 Sushee CMS
 ==========
 
-> ..is a small and highly customizable content management system to build JSON APIs.
+> A small and highly customizable content management system to build JSON APIs.
 
 **WARNING: Work in progress!!**
 
