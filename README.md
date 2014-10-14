@@ -5,6 +5,9 @@ Sushee CMS
 
 **WARNING: Work in progress!!**
 
+About
+-----
+
 Sushee helps you to *not* waste time...
 - building a custom web-application backend from scratch
 - tailoring an existing solution to fit your needs
@@ -13,9 +16,7 @@ Sushee helps you to *not* waste time...
 
 ![alt text](https://raw.githubusercontent.com/chrigu-ebert/Sushee-CMS/master/web/admin/facebook.png "Logo")
 
-About
------
-Sushee CMS has a few key features and principles to make life easier.
+Sushee has a few key features and principles to make life easier.
 
 - It is **simple** to setup and maintain. It has almost no dependencies. It doesn't need all those time-consuming updates and you can backup your data easily by just copying the `data` folder. Check the [system requirements](#system-requirements) section for details.
 - Very **small** codebase. There are only a few classes necessary to run the whole CMS. No rocket sience.
