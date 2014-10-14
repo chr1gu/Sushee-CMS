@@ -3,7 +3,7 @@ Sushee CMS
 
 **Work in progress!!**
 
-A small and highly customizable content management system to build JSON APIs.
+> A small and highly customizable content management system to build JSON APIs.
 
 Sushee helps you to *not* waste time...
 - building a custom web-application backend from scratch
