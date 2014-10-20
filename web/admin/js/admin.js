@@ -1,5 +1,5 @@
 var fixNavbarHeight = function () {
-    $('.max-height').height ($( document ).height() - $('.navbar-header').height());
+    $('.max-height').height('').height ($( document ).height() - $('.navbar-header').height());
 }
 
 // fix sidebar height
@@ -326,6 +326,8 @@ function loadModule (id, name, single, dataid)
         } else {
             $('#admin-content').html('<div class="row"><h2>Oops...</h2><p>Irgendwas ist schief gelaufen! Das Modul konnte nicht geladen werden.</p></div>');
         }
+        $(window).scrollTop(0);
+        fixNavbarHeight();
     });
 }
 
