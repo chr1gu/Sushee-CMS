@@ -1,27 +1,43 @@
 Sushee CMS
 ==========
 
-A JSON based content management system. **Work in progress!**
+> A small and highly customizable content management system to build JSON APIs.
 
-> This whole thing is just a first prototype. Don't use it, things might change a lot and there will be a heavy
-> cleanup iteration soon! There will be a roadmap soon.
-
-![alt text](https://raw.githubusercontent.com/chrigu-ebert/Sushee-CMS/master/web/admin/facebook.png "Logo")
+**WARNING: Work in progress!!**
 
 About
 -----
-Sushee CMS has a few key features and goals.
 
-Having a backend that is **simple** to setup and maintain is mostly the reason why I created this project. Almost all famous solutions out there have several dependencies and imply regular updates which is time-consuming. I'm not going into details here but all those updates have several annoying drawbacks.
+Sushee helps you to *not* waste time...
+- building a custom web-application backend from scratch
+- tailoring an existing solution to fit your needs
+- applying security patches and vendor updates to your existing backend
+- reading through endless documentation & code
 
-I want to **customize** my backend to fit my client's needs. Naming conventions and data changes all the time and this needs to be a no-brainer.
+![alt text](https://raw.githubusercontent.com/chrigu-ebert/Sushee-CMS/master/web/admin/facebook.png "Logo")
 
-**Performance** is very important because especially on mobile phones you have a limited bandwidth. Most of the existing solutions load plenty of vendor shit that makes your backend slow. Actually often you only need a fraction of all the things that are loaded. I directly read/write to the filesystem. No Database. Everything is loaded asynchronously with Javascript.
+Sushee has a few key features and principles to make life easier.
 
+- It is **simple** to setup and maintain. It has almost no dependencies. It doesn't need all those time-consuming updates and you can backup your data easily by just copying the `data` folder. Check the [system requirements](#system-requirements) section for details.
+- Very **small** codebase. There are only a few classes necessary to run the whole CMS. No rocket sience.
+- You can **customize it** easily to fit your needs. You can add & remove data attributes on the fly. You can extend existing modules and/or build your own.
+- It is really **fast** and performing well. All the usual vendor scripts bloat your application and make it slow but often you just need a fraction of all the things that are loaded. Sushee directly writes data to the filesystem. No extra database software necessary. Everything is loaded asynchronously with Javascript.
+- It has a small footprint and is **open source** :)
+
+
+### Built with
+- [Gumby Framework](http://gumbyframework.com/) - Clean and sexy css framework
+- [JQuery](http://jquery.com/) - The Javascript library we all know
 
 
 Setup
 -----
+
+### System requirements
+- PHP 5.2.17 or higher
+- Write permissions in `/data/modules` folder
+
+### Getting started
 0. Clone/copy repository
 0. Create a user
 0. Create a module
@@ -56,6 +72,37 @@ hash | The hash is a derivation of data used to authenticate. It represents your
 
 ### Module management
 
+#### Basic Module
+
+    {
+        "id": "contact",
+        "name": "Contact",
+        "single": true,
+        "fields": [
+            {
+                "name": "Name",
+                "id": "name",
+                "placeholder": "",
+                "type": "text"
+            },
+            {
+                "name": "Message",
+                "id": "message",
+                "placeholder": "",
+                "type": "textarea"
+            }
+        ]
+    }
+
+
+#### Custom icons
+
+You can change the icon displayed in the sidemenu of each module. Just specify an `icon` property for the module. You can use the famous [Entypo Icons](http://gumbyframework.com/docs/ui-kit/#!/icons).
+
+    {
+        "icon": "icon-cloud",
+        ...
+    }
 
 ### Field types
 
