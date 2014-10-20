@@ -48,12 +48,17 @@ if (!$fields) {
 
 // TODO: where...
 
-
 require_once dirname(__FILE__) . '/../src/admin.modules.php';
 
 $adminModule = new AdminModules();
 $module = $adminModule->getModuleById($viewData['module']);
 $data = $adminModule->getData($viewData['module'], $viewData['fields']);
+
+// legacy projects...
+if (isset($viewData['version']) && $viewData['version'] === 0.9) {
+    return print (json_encode($data));
+}
+
 $response = array(
     'success' => true,
     //'module' => $module,
