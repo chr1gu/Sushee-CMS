@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /
+# no file access here..
+RewriteRule ^(.*)$ /web [L,NC]
