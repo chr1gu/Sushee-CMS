@@ -8,18 +8,18 @@
 require_once dirname(__FILE__) . '/../../../src/admin.login.php';
 header('Content-Type: application/json');
 
-$login = new AdminLogin();
-$user = $login->getSessionUser();
-if (!$user) {
-    return print ('Keine Berechtigung.');
-}
+//$login = new AdminLogin();
+//$user = $login->getSessionUser();
+//if (!$user) {
+//    return print ('Keine Berechtigung.');
+//}
 
-$id = filter_input(INPUT_GET, 'id');
+$id = empty($id) ? filter_input(INPUT_GET, 'id') : $id;
 if (!$id) {
     return print ('Modul-ID nicht vorhanden');
 }
 
-$file = filter_input(INPUT_GET, 'file');
+$file = empty($file) ? filter_input(INPUT_GET, 'file') : $file;
 if (!$file) {
     return print ('File-Name nicht vorhanden');
 }

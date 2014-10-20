@@ -11,10 +11,19 @@ if (!$path) {
 }
 
 header('Content-Type: application/json');
-
-$path = str_replace('/', '.', $path);
 $dataDir = dirname(__FILE__) . '/../data';
 $viewsDir = $dataDir . '/views';
+
+// "special" file url
+/*if (strpos($path, 'file/') === 0) {
+    $args = explode('/', $path);
+    $id = $args[1];
+    $file = $args[2];
+    include_once dirname(__FILE__) . '/admin/api/file.php';
+    return;
+}*/
+
+$path = str_replace('/', '.', $path);
 $viewPath = $viewsDir . '/' . $path . '.json';
 
 if (!is_file($viewPath)) {
@@ -48,12 +57,29 @@ require_once dirname(__FILE__) . '/../src/admin.modules.php';
 
 $adminModule = new AdminModules();
 $module = $adminModule->getModuleById($viewData['module']);
-$data = $adminModule->getData($viewData['module'], $fields);
+$data = $adminModule->getData($module, $fields);
 
-// legacy projects...
+// legacy project tweaks for api inconsistency..
 if (isset($viewData['version']) && $viewData['version'] === 0.9) {
+    $imageId = null;
+    // provide 'url' param for image types
+    foreach ($module['fields'] as $field) {
+        if ($field['type'] === 'image')
+            $imageId = $field['id'];
+    }
+    if ($imageId) {
+        foreach ($data as $key => $value) {
+            //$data[$key]['id'] = (int)$data[$key]['id'];
+            $data[$key][$imageId]['width'] = 320;
+            $data[$key][$imageId]['height'] = 240;
+            $data[$key][$imageId]['url'] .= '&width=320&height=240';
+            $data[$key]['url'] = $value[$imageId]['url'];
+        }
+    }
+    // directly return data without success flag..
     return print (json_encode($data));
 }
+// ..............................................
 
 $response = array(
     'success' => true,

@@ -39,10 +39,10 @@ class AdminModules
         }
     }
 
-    public function getData ($moduleId, $fields = null, $dataId = "*")
+    public function getData ($module, $fields = null, $dataId = "*")
     {
         $data = array ();
-        $dataPattern = $this->modulesDir . $moduleId . '/' . $dataId . '.json';
+        $dataPattern = $this->modulesDir . $module['id'] . '/' . $dataId . '.json';
         foreach (glob($dataPattern) as $filename) {
             $contentRaw = file_get_contents($filename);
             $content = json_decode($contentRaw, true);
@@ -57,11 +57,26 @@ class AdminModules
                 $filteredContent['id'] = $id;
                 $filteredContent['created_at'] = isset($content['created_at']) ? $content['created_at'] : time();
                 $filteredContent['updated_at'] = isset($content['updated_at']) ? $content['updated_at'] : time();
-                $data[] = $filteredContent;
+                $content = $filteredContent;
             } else {
                 $content['id'] = $id;
-                $data[] = $content;
             }
+
+            // loop through fields and add extra info which is not stored in the file
+            // e.g. a file path
+            foreach ($module['fields'] as $field) {
+                if (isset($content[$field['id']])) {
+                    if ($field['type'] === 'image') {
+                        $val = $content[$field['id']];
+                        $content[$field['id']] = array(
+                            'name' => $val,
+                            'url' => 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/admin/api/file.php?id=' . $module['id'] . '&file=' . $val
+                        );
+                    }
+                }
+            }
+
+            $data[] = $content;
 
         }
         return $data;
@@ -113,7 +128,7 @@ class AdminModules
         if (!$module || !isset($module['id']) || !isset($module['list-fields']) || !is_array($module['list-fields']))
             return $data;
 
-        return $this->getData($module['id'], $module['list-fields']);
+        return $this->getData($module, $module['list-fields']);
     }
 
     function getListFieldsForModule ($module)

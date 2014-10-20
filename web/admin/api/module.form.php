@@ -48,13 +48,13 @@ if (!empty($_POST)) {
 
 $data = null;
 if ($module['single']) {
-    $dataArray = $adminModule->getData($module['id']);
+    $dataArray = $adminModule->getData($module);
     $data = count($dataArray) ? $dataArray[0] : null;
 }
 
 $dataId = filter_input(INPUT_GET, "data-id");
 if ($dataId) {
-    $dataArray = $adminModule->getData($module['id'], null, $dataId);
+    $dataArray = $adminModule->getData($module, null, $dataId);
     $data = count($dataArray) ? $dataArray[0] : null;
 }
 
