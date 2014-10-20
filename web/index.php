@@ -62,18 +62,30 @@ $data = $adminModule->getData($module, $fields);
 // legacy project tweaks for api inconsistency..
 if (isset($viewData['version']) && $viewData['version'] === 0.9) {
     $imageId = null;
+    $youtubeId = null;
     // provide 'url' param for image types
     foreach ($module['fields'] as $field) {
         if ($field['type'] === 'image')
             $imageId = $field['id'];
+        if ($field['type'] === 'youtube')
+            $youtubeId = $field['id'];
     }
     if ($imageId) {
         foreach ($data as $key => $value) {
-            //$data[$key]['id'] = (int)$data[$key]['id'];
             $data[$key][$imageId]['width'] = 320;
             $data[$key][$imageId]['height'] = 240;
             $data[$key][$imageId]['url'] .= '&width=320&height=240';
             $data[$key]['url'] = $value[$imageId]['url'];
+        }
+    }
+    if ($youtubeId) {
+        foreach ($data as $key => $value) {
+            $url = $value[$youtubeId]['url'];
+            $image = $data[$key][$youtubeId]['image'];
+            $v = preg_replace('/http(s?)\:\/\/www\.youtube\.com\/watch\?v\=/', '', $url);
+            $data[$key][$youtubeId]['url'] = $image . '&width=320&height=240';
+            $data[$key][$youtubeId]['image'] = '';
+            $data[$key]['url'] = $v;
         }
     }
     // directly return data without success flag..

@@ -72,6 +72,10 @@ class AdminModules
                             'name' => $val,
                             'url' => 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/admin/api/file.php?id=' . $module['id'] . '&file=' . $val
                         );
+                    } else if ($field['type'] === 'youtube') {
+                        $val = $content[$field['id']];
+                        $val['image'] = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/admin/api/file.php?id=' . $module['id'] . '&file=' . $val['name'];
+                        $content[$field['id']] = $val;
                     }
                 }
             }
