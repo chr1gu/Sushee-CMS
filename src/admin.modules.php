@@ -71,6 +71,9 @@ class AdminModules
     {
         $dataDirectory = $this->modulesDir . $module['id'];
         $dataPattern = $dataDirectory . '/' . $data['data-id'] . '.json';
+        if (!is_dir($this->modulesDir)) {
+            mkdir($this->modulesDir);
+        }
         if (!is_dir($dataDirectory)) {
             mkdir($dataDirectory);
         }

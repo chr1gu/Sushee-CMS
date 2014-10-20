@@ -148,6 +148,7 @@ var getFormTemplate = function (content)
             ' + (!content.single && exists ? '<span class="small danger btn rounded pull_right"><a href="#" data-action="delete" module-single="' + content.single + '" module-name="' + content.name + '" module-id="' + content.id + '" data-id="' + content.data.id + '" >Löschen</a></span>' : '') + '\
             <span>' + content.name + ' ' + (exists ? 'bearbeiten' : 'hinzufügen') + '</span>\
         </h2>\
+        <div style="font-size:70%;color:#ccc;">Element-ID: ' + content.data.id + '</div>\
         <div style="height: 38px;"><span class="alert-container pull_left">&nbsp;</span></div>\
         <form action="api/module.form.php" method="post">\
             <ul>\
@@ -162,8 +163,8 @@ var getFormTemplate = function (content)
         </form>\
     </div>';
 
-    var fields = '<input type="hidden" name="id" value="' + content.id + '" />' +
-        '<input type="hidden" name="data-id" value="' + content.data.id + '" />';
+    var fields = '<li><span></span><input type="hidden" name="id" value="' + content.id + '" />' +
+        '<input type="hidden" name="data-id" value="' + content.data.id + '" /></li>';
 
     $.each(content.fields, function(index){
         var field = content.fields[index];

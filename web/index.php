@@ -11,6 +11,8 @@ if (!$path) {
 }
 
 header('Content-Type: application/json');
+
+$path = str_replace('/', '.', $path);
 $dataDir = dirname(__FILE__) . '/../data';
 $viewsDir = $dataDir . '/views';
 $viewPath = $viewsDir . '/' . $path . '.json';
@@ -39,12 +41,6 @@ if (!$module) {
 }
 
 $fields = isset($viewData['fields']) && is_array($viewData['fields']) && !empty($viewData['fields']) ? $viewData['fields'] : null;
-if (!$fields) {
-    return print (json_encode(array(
-        'success' => false,
-        'error' => 'Keine Felder definiert'
-    )));
-}
 
 // TODO: where...
 
@@ -52,7 +48,7 @@ require_once dirname(__FILE__) . '/../src/admin.modules.php';
 
 $adminModule = new AdminModules();
 $module = $adminModule->getModuleById($viewData['module']);
-$data = $adminModule->getData($viewData['module'], $viewData['fields']);
+$data = $adminModule->getData($viewData['module'], $fields);
 
 // legacy projects...
 if (isset($viewData['version']) && $viewData['version'] === 0.9) {
