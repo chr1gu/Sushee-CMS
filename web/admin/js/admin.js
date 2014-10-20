@@ -37,7 +37,7 @@ var fieldTypes = {
     {
         value = value || {};
         value.url = value.url || "";
-        var youtubeUrlDirect = value.url.match(/\?v=(\w+)/);
+        var youtubeUrlDirect = value.url.match(/\?v=([\w-]+)/);
         var youtubeUrl = youtubeUrlDirect ? 'http://www.youtube.com/embed/' +  youtubeUrlDirect[1] : value.url;
         var imagePreview = value.name ? ('./api/file.php?id=' + moduleId + '&file=' + value.name + '&width=150&height=150') : '';
         return '<h4>' +
