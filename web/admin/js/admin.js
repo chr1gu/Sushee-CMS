@@ -62,7 +62,7 @@ var fieldTypes = {
     },
     image: function(field, value, moduleId, dataId)
     {
-        var imagePreview = value ? ('./api/file.php?id=' + moduleId + '&file=' + value) : '';
+        var imagePreview = value ? ('./api/file.php?id=' + moduleId + '&file=' + value.name) : '';
         var imagePreviewThumb = imagePreview + '&width=150&height=150';
         return '<h4>' + field.name + '</h4>' +
             '<div class="image-preview ' + (!imagePreview ? 'hide' : '') + '">' +
@@ -123,7 +123,7 @@ var getListTemplate = function (content) {
             var field = content.fields[ii];
             var value = data[field.id];
             if (field.type === 'image') {
-                var imagePreview = value ? ('./api/file.php?id=' + content.id + '&file=' + value + '&width=150&height=100&quality=50') : './img/thumb_not_available.png';
+                var imagePreview = value ? ('./api/file.php?id=' + content.id + '&file=' + value.name + '&width=150&height=100&quality=50') : './img/thumb_not_available.png';
                 value = '<a href="#" data-action="edit" module-name="' + content.name + '" module-id="' + content.id + '" data-id="' + data.id + '"><img data-original="' + imagePreview + '" class="lazy list-thumb" /></a>';
             }
             if (field.type === 'youtube') {
