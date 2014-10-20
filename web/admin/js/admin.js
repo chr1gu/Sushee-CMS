@@ -25,7 +25,8 @@ var fieldTypes = {
         if (field.values && field.values.length) {
             for (var i=0; i<field.values.length; i++) {
                 var _value = field.values[i];
-                var isSelected = _value.value.toString() === value.toString();
+                value = value ? value.toString() : "";
+                var isSelected = _value.value.toString() === value;
                 html += '<option value="' + (_value.value || '') + '" ' + (isSelected ? 'selected' : '') + '>' + (_value.label || '') + '</option>'
             }
         }
@@ -68,7 +69,7 @@ var fieldTypes = {
             '<div class="image photo pull_left rounded switch" gumby-trigger="#preview-' + dataId + '" style="margin-left: 1px !important; background-color: white; cursor: pointer;">' +
             '<img src="' + (!imagePreview ? './img/thumb_not_available.png' : imagePreviewThumb) + '" class="thumb-image-container" style="height:150px;width:150px;" alt="">' +
             '</div>' +
-            '<span class="small default btn rounded pull_left" style="margin-left: 10px !important;"><a href="#">Bild entfernen</a></span>' +
+            '<span class="small default btn rounded pull_left" style="margin-left: 10px !important;"><a href="#" data-action="delete-image" field-id="' + field.id + '" data-url="./api/remove.php?id=' + moduleId + '&data-id=' + dataId + '&field-id=' + field.id + '">Bild entfernen</a></span>' +
             '</div>' +
             '<div class="modal" id="preview-' + dataId + '">' +
             '<div class="content">' +
@@ -122,7 +123,7 @@ var getListTemplate = function (content) {
             var field = content.fields[ii];
             var value = data[field.id];
             if (field.type === 'image') {
-                var imagePreview = value ? ('./api/file.php?id=' + content.id + '&file=' + value + '&width=150&height=100&quality=50') : '';
+                var imagePreview = value ? ('./api/file.php?id=' + content.id + '&file=' + value + '&width=150&height=100&quality=50') : './img/thumb_not_available.png';
                 value = '<a href="#" data-action="edit" module-name="' + content.name + '" module-id="' + content.id + '" data-id="' + data.id + '"><img data-original="' + imagePreview + '" class="lazy list-thumb" /></a>';
             }
             if (field.type === 'youtube') {
@@ -144,7 +145,7 @@ var getFormTemplate = function (content)
     var exists = content.data && content.data.created_at !== undefined;
     var template = '<div class="row">\
         <h2 style="padding-bottom: 5px;">\
-            ' + (!content.single && exists ? '<span class="small danger btn rounded pull_right"><a href="#">Löschen</a></span>' : '') + '\
+            ' + (!content.single && exists ? '<span class="small danger btn rounded pull_right"><a href="#" data-action="delete" module-single="' + content.single + '" module-name="' + content.name + '" module-id="' + content.id + '" data-id="' + content.data.id + '" >Löschen</a></span>' : '') + '\
             <span>' + content.name + ' ' + (exists ? 'bearbeiten' : 'hinzufügen') + '</span>\
         </h2>\
         <div style="height: 38px;"><span class="alert-container pull_left">&nbsp;</span></div>\
@@ -156,7 +157,7 @@ var getFormTemplate = function (content)
                 <div class="medium primary rounded btn pull_right">\
                     <input type="submit" value="Speichern"/>\
                 </div>\
-                ' + (!content.single ? '<span class="medium secondary btn rounded"><a href="#">Abbrechen</a></span>' : '') + '\
+                ' + (!content.single ? '<span class="medium secondary btn rounded"><a href="#" data-action="list" module-single="' + content.single + '" module-name="' + content.name + '" module-id="' + content.id + '">Liste anzeigen</a></span>' : '') + '\
             </div>\
         </form>\
     </div>';
@@ -218,13 +219,47 @@ function initAjaxContent()
     // delete
     $('#admin-content a[data-action="delete"]').click(function(e){
         e.preventDefault();
-        console.log('delete');
+        if (confirm('Wirklich löschen?')) {
+            var id = $(this).attr('module-id');
+            var single = $(this).attr('module-single') === "true";
+            var name = $(this).attr('module-name');
+            var dataId = $(this).attr('data-id');
+            $.getJSON('./api/remove.php', {
+                "id": id,
+                "data-id": dataId
+            }, function(response) {
+                response = response || {};
+                if (response.success === true) {
+                    loadModule(id, name, single);
+                } else {
+                    $('.alert-container').hide()
+                        .html('<div class="danger alert">' + (response.error || 'Fehler beim Löschen') + '</div>')
+                        .fadeIn();
+                }
+            });
+        }
+    });
+    
+    // delete image
+    $('#admin-content a[data-action="delete-image"]').click(function(e){
+        e.preventDefault();
+        var url = $(this).attr('data-url');
+        var id = $(this).attr('field-id');
+        $.getJSON(url, {}, function(response) {
+            if (response && response.success === true) {
+                $('#admin-content .image-preview').hide();
+                $('#admin-content input[name=' + id + ']').val(''); 
+            }
+        });
     });
 
     // list module data
     $('#admin-content a[data-action="list"]').click(function(e){
         e.preventDefault();
-        console.log('list');
+        var id = $(this).attr('module-id');
+        var single = $(this).attr('module-single') === "true";
+        var name = $(this).attr('module-name');
+        loadModule(id, name, single);
     });
 
     // lazy load images
@@ -339,7 +374,7 @@ var initFileUpload = function()
             if (data.result.success) {
                 alert.addClass('alert success');
                 alert.html('Bild wurde gespeichert');
-                preview.removeClass('hide');
+                preview.removeClass('hide').show();
                 if (data.result.url) {
                     image.attr('src', data.result.url);
                     thumbnail.attr('src', data.result.url + '&width=150&height=150');
