@@ -175,6 +175,33 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "type": "youtube"
     }
 
+
+Consuming data
+--------------
+
+### Create a basic view
+To actually use the data we enter through the admin panel you have to create a view. Just create a <url>.json file in the `data/views` folder (e.g. videos.json) with the following content:
+
+    {
+        "module": "videos",
+        "fields": [
+            "video"
+        ]
+    }
+
+Key | Value
+--- | ---
+module | The target module identifier (id) specified in  `config/modules.json`
+fields | An array of fields of the given module, you want to return
+
+That's it. Enter some data then simply access your data like this:
+`http://yourhost/videos`
+
+### Create a detail view
+TBD
+
+
+
 Roadmap
 -------
 TBD
