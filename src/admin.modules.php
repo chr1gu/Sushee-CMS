@@ -77,6 +77,9 @@ class AdminModules
                         $val['image'] = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/admin/api/file.php?id=' . $module['id'] . '&file=' . $val['name'];
                         $content[$field['id']] = $val;
                     }
+                } else {
+                    // add new or empty fields
+                    $content[$field['id']] = '';
                 }
             }
 

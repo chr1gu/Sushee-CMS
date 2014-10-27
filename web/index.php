@@ -93,6 +93,21 @@ if (isset($viewData['version']) && $viewData['version'] === 0.9) {
 }
 // ..............................................
 
+// display single modules differently
+$single = $module['single'];
+if ($single) {
+    if (!empty($data)) {
+        $data = $data[0];
+    } else {
+        $emptyData = array();
+        foreach ($module['fields'] as $field) {
+            $emptyData[$field['id']] = '';
+        }
+        $data = $emptyData;
+    }
+}
+
+
 $response = array(
     'success' => true,
     //'module' => $module,
