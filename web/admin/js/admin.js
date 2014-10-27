@@ -82,7 +82,7 @@ var fieldTypes = {
             '<div class="danger alert hide"></div>' +
             '<div class="input">' +
             '<input id="fileupload" type="file" name="file" data-url="./api/upload.php?id=' + moduleId + '&data-id=' + dataId + '&field-id=' + field.id + '" accept="image/*">' +
-            '<input type="hidden" name="' + field.id + '" value="' + (value || '') + '" />'
+            '<input type="hidden" name="' + field.id + '" value="' + (value.name || '') + '" />'
             '</div>';
     }
 };
