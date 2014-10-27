@@ -175,6 +175,16 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "type": "youtube"
     }
 
+### Field validation
+
+### Character limit
+TBD
+
+    {
+        "limit": 255,
+        ...
+    }
+
 
 Consuming data
 --------------
