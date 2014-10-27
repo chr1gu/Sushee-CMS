@@ -23,6 +23,9 @@ $viewsDir = $dataDir . '/views';
     return;
 }*/
 
+// remove trailing slash
+$path = $path = rtrim($path, '/');
+// replace slashes because all views are stored in the same folder
 $path = str_replace('/', '.', $path);
 $viewPath = $viewsDir . '/' . $path . '.json';
 
