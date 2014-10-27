@@ -177,7 +177,7 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
 
 ### Field validation
 
-### Character limit
+#### Character limit
 TBD
 
     {
