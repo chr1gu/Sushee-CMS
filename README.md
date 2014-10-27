@@ -11,7 +11,7 @@ About
 Sushee helps you to *not* waste time...
 - building a custom web-application backend from scratch
 - tailoring an existing solution to fit your needs
-- applying security patches and vendor updates to your existing backend
+- applying security patches and vendor updates all the time
 - reading through endless documentation & code
 
 ![alt text](https://raw.githubusercontent.com/chrigu-ebert/Sushee-CMS/master/web/admin/facebook.png "Logo")
