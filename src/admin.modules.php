@@ -42,12 +42,13 @@ class AdminModules
     public function getData ($module, $fields = null, $dataId = "*")
     {
         $data = array ();
+        $fields = is_array($fields) ? $fields : array();
         $dataPattern = $this->modulesDir . $module['id'] . '/' . $dataId . '.json';
         foreach (glob($dataPattern) as $filename) {
             $contentRaw = file_get_contents($filename);
             $content = json_decode($contentRaw, true);
             $id = basename($filename, '.' . pathinfo($filename, PATHINFO_EXTENSION));
-            if (is_array($fields)) {
+            if (!empty($fields)) {
                 $filteredContent = array ();
                 foreach ($content as $index => $value) {
                     if (in_array($index, $fields)) {
@@ -77,7 +78,7 @@ class AdminModules
                         $val['image'] = 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/admin/api/file.php?id=' . $module['id'] . '&file=' . $val['name'];
                         $content[$field['id']] = $val;
                     }
-                } else {
+                } else if(empty($fields)) {
                     // add new or empty fields
                     $content[$field['id']] = '';
                 }
