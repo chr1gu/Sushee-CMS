@@ -64,6 +64,7 @@ var fieldTypes = {
     {
         var imagePreview = value ? ('./api/file.php?id=' + moduleId + '&file=' + value.name) : '';
         var imagePreviewThumb = imagePreview + '&width=150&height=150';
+        value = value || {};
         return '<h4>' + field.name + '</h4>' +
             '<div class="image-preview ' + (!imagePreview ? 'hide' : '') + '">' +
             '<div class="image photo pull_left rounded switch" gumby-trigger="#preview-' + dataId + '" style="margin-left: 1px !important; background-color: white; cursor: pointer;">' +
