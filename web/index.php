@@ -98,7 +98,15 @@ if (isset($viewData['version']) && $viewData['version'] === 0.9) {
 
 // display data as array
 if (isset($viewData['data-output']) && $viewData['data-output'] === 'array') {
-    $data = array_values($data);
+    if ($module['single']) {
+        $data = array_values($data);
+    } else {
+        $newData = array();
+        for ($i=0;$i<count($data);$i++) {
+            $newData = array_merge($newData, array_values($data[$i]));
+        }
+        $data = $newData;
+    }
 }
 
 $response = array(
