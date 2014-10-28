@@ -48,8 +48,7 @@ if (!empty($_POST)) {
 
 $data = null;
 if ($module['single']) {
-    $dataArray = $adminModule->getData($module);
-    $data = count($dataArray) ? $dataArray[0] : null;
+    $data = $adminModule->getData($module);
 }
 
 $dataId = filter_input(INPUT_GET, "data-id");

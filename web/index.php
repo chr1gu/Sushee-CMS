@@ -96,20 +96,10 @@ if (isset($viewData['version']) && $viewData['version'] === 0.9) {
 }
 // ..............................................
 
-// display single modules differently
-$single = $module['single'];
-if ($single) {
-    if (!empty($data)) {
-        $data = $data[0];
-    } else {
-        $emptyData = array();
-        foreach ($module['fields'] as $field) {
-            $emptyData[$field['id']] = '';
-        }
-        $data = $emptyData;
-    }
+// display data as array
+if (isset($viewData['data-output']) && $viewData['data-output'] === 'array') {
+    $data = array_values($data);
 }
-
 
 $response = array(
     'success' => true,

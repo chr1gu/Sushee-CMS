@@ -62,9 +62,9 @@ var fieldTypes = {
     },
     image: function(field, value, moduleId, dataId)
     {
-        var imagePreview = value ? ('./api/file.php?id=' + moduleId + '&file=' + value.name) : '';
-        var imagePreviewThumb = imagePreview + '&width=150&height=150';
         value = value || {};
+        var imagePreview = value.name ? ('./api/file.php?id=' + moduleId + '&file=' + value.name) : '';
+        var imagePreviewThumb = imagePreview + '&width=150&height=150';
         return '<h4>' + field.name + '</h4>' +
             '<div class="image-preview ' + (!imagePreview ? 'hide' : '') + '">' +
             '<div class="image photo pull_left rounded switch" gumby-trigger="#preview-' + dataId + '" style="margin-left: 1px !important; background-color: white; cursor: pointer;">' +
@@ -82,7 +82,7 @@ var fieldTypes = {
             '</div>' +
             '<div class="danger alert hide"></div>' +
             '<div class="input">' +
-            '<input id="fileupload" type="file" name="file" data-url="./api/upload.php?id=' + moduleId + '&data-id=' + dataId + '&field-id=' + field.id + '" accept="image/*">' +
+            '<input class="fileupload" type="file" name="file" data-url="./api/upload.php?id=' + moduleId + '&data-id=' + dataId + '&field-id=' + field.id + '" accept="image/*">' +
             '<input type="hidden" name="' + field.id + '" value="' + (value.name || '') + '" />'
             '</div>';
     }
@@ -122,13 +122,13 @@ var getListTemplate = function (content) {
         tbody += '<tr>'
         $.each(content.fields, function(ii){
             var field = content.fields[ii];
-            var value = data[field.id];
+            var value = data[field.id] || {};
             if (field.type === 'image') {
-                var imagePreview = value ? ('./api/file.php?id=' + content.id + '&file=' + value.name + '&width=150&height=100&quality=50') : './img/thumb_not_available.png';
+                var imagePreview = value.name ? ('./api/file.php?id=' + content.id + '&file=' + value.name + '&width=150&height=100&quality=50') : './img/thumb_not_available.png';
                 value = '<a href="#" data-action="edit" module-name="' + content.name + '" module-id="' + content.id + '" data-id="' + data.id + '"><img data-original="' + imagePreview + '" class="lazy list-thumb" /></a>';
             }
             if (field.type === 'youtube') {
-                var imagePreview = value ? ('./api/file.php?id=' + content.id + '&file=' + value.name + '&width=150&height=100&quality=50') : '';
+                var imagePreview = value.name ? ('./api/file.php?id=' + content.id + '&file=' + value.name + '&width=150&height=100&quality=50') : '';
                 value = '<a href="#" data-action="edit" module-name="' + content.name + '" module-id="' + content.id + '" data-id="' + data.id + '"><img data-original="' + imagePreview + '" class="lazy list-thumb" /></a>';
             }
             tbody += '<td>' + value + '</td>';
@@ -356,7 +356,7 @@ $('.side-navigation li.active a').click();
 // file uploads
 var initFileUpload = function()
 {
-    $('#fileupload').fileupload({
+    $('.fileupload').fileupload({
         dataType: 'json',
         submit: function ()
         {
