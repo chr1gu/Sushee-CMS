@@ -381,7 +381,7 @@ var initFileUpload = function()
                 preview.removeClass('hide').show();
                 if (data.result.url) {
                     image.attr('src', data.result.url);
-                    thumbnail.attr('src', data.result.url + '&width=150&height=150');
+                    thumbnail.attr('src', data.result.url + '&width=150&height=150&no-cache='+Date.now());
                     input.val(data.result.name);
                 }
             } else {
