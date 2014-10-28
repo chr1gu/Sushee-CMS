@@ -11,7 +11,7 @@ About
 Sushee helps you to *not* waste time...
 - building a custom web-application backend from scratch
 - tailoring an existing solution to fit your needs
-- applying security patches and vendor updates to your existing backend
+- applying security patches and vendor updates all the time
 - reading through endless documentation & code
 
 ![alt text](https://raw.githubusercontent.com/chrigu-ebert/Sushee-CMS/master/web/admin/facebook.png "Logo")
@@ -175,6 +175,24 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "type": "youtube"
     }
 
+### Field validation
+
+#### Required fields
+TBD
+
+    {
+        "required": true,
+        ...
+    }
+
+#### Character limit
+TBD
+
+    {
+        "limit": 255,
+        ...
+    }
+
 
 Consuming data
 --------------
@@ -192,13 +210,34 @@ To actually use the data we enter through the admin panel you have to create a v
 Key | Value
 --- | ---
 module | The target module identifier (id) specified in  `config/modules.json`
-fields | An array of fields of the given module, you want to return
+fields | An array of fields of the given module, you want to return. This can either be a list of strings or objects (see examples below)
 
 That's it. Enter some data then simply access your data like this:
 `http://yourhost/videos`
 
+### Configure fields
+You can add additional output information for a field by adding the `static-data` attribute. That data will be attached when you access `http://yourhost/videos`:
+
+    {
+        "module": "videos",
+        "fields": [
+            {
+                "field": "video",
+                "static-data": {
+                    "foo": {
+                        "foo": "bar"
+                    }
+                }
+            }
+        ]
+    }
+
 ### Create a detail view
 TBD
+
+### View options
+TBD
+"data-output": "array",
 
 
 
