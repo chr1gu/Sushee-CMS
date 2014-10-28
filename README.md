@@ -235,6 +235,10 @@ You can add additional output information for a field by adding the `static-data
 ### Create a detail view
 TBD
 
+### View options
+TBD
+"data-output": "array",
+
 
 
 Roadmap
