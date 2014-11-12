@@ -27,7 +27,7 @@
 </head>
 <body class="metro admin-overview">
 
-<div class="navbar-header" style="height: 32px;">
+<div class="navbar-header" style="height: 32px; position: absolute; top:0; left:0;width: 100%;">
     <div gumby-fixed="top" style="background: #222; width: 100%; z-index: 1000;">
         <div style="height:32px; line-height:32px; padding-right: 10px; color: #aaa; font-size: 80%" class="text-right">
             Willkommen, <a href="#" class="toggle" style="color: #ffffff;font-weight: bold;" gumby-trigger="#logout">{DisplayName}</a>
@@ -41,8 +41,8 @@
     </div>
 </div>
 
-<div class="pull_left" style="padding:0; background: #222; width:100%;">
-    <section class="max-height side-navigation-container">
+<div class="pull_left" style="padding:0; background: #222; width:100%; min-height:100%;">
+    <section class="max-height side-navigation-container" style="margin-top:32px;">
         <ul class="side-navigation">
             <li class="active"><a href="#" module-html="home"><i class="icon-info"></i><span>Übersicht</span></a></li>
             {navigation-items}
@@ -104,7 +104,7 @@
         </div>
     </section>
 
-    <section id="home" style="display: none;">
+    <section id="home" style="display: none; margin-top:32px;">
         <div class="row">
             <h2>Hey</h2>
             <h4>Schön dich zu sehen</h4>

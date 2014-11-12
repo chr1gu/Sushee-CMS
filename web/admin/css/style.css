@@ -54,7 +54,14 @@ body {
 body.admin-overview {
     background-color: #eeeeee;
 }
+
+body.admin-overview .row {
+    margin-top: 32px;
+    padding-bottom: 50px;
+}
+
 #admin-content {
+    min-height: 100%;
     background-image: url(../img/sushee-footer.svg);
     background-repeat: no-repeat;
     background-position: bottom right;

@@ -1,5 +1,9 @@
 var fixNavbarHeight = function () {
-    $('.max-height').height('').height ($( document ).height() - $('.navbar-header').height());
+    var content = $('#admin-content');
+    content.css('min-height', '');
+    var parent = content.parent();
+    content.css('min-height', parent.height() + 'px');
+    //$('#admin-content').height('').height ($( document ).height() - $('.navbar-header').height());
 }
 
 // fix sidebar height
