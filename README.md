@@ -232,6 +232,12 @@ You can add additional output information for a field by adding the `static-data
         ]
     }
 
+### Direct Image Output (base64)
+TBD
+
+    "direct": true,
+
+
 ### Create a detail view
 TBD
 
