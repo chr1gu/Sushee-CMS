@@ -114,6 +114,15 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "placeholder": "",
         "type": "text"
     }
+    
+#### Title
+
+    {
+        "name": "Title",
+        "id": "title",
+        "placeholder": "",
+        "type": "title"
+    }
 
 #### E-Mail
 
