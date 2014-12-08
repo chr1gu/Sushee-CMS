@@ -207,7 +207,6 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
     {
         "name": "Submit",
         "id": "submit",
-        "placeholder": "Submit",
         "type": "button_submit"
     }
 
@@ -216,7 +215,7 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
     {
         "name": "Sms",
         "id": "sms",
-        "placeholder": "SMS",
+        "placeholder": "+41761234567",
         "type": "button_sms"
     }
 
@@ -225,7 +224,7 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
     {
         "name": "Call",
         "id": "call",
-        "placeholder": "Call",
+        "placeholder": "+41761234567",
         "type": "button_call"
     }
 
@@ -234,7 +233,7 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
     {
         "name": "Mail",
         "id": "mail",
-        "placeholder": "E-Mail",
+        "placeholder": "test@example.com",
         "type": "button_mail"
     }
 
