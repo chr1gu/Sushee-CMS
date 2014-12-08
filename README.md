@@ -156,7 +156,6 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         ]
     }
 
-
 #### Image
 
     {
@@ -174,6 +173,65 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "placeholder": "http://www.youtube.com/watch?v=xxx",
         "type": "youtube"
     }
+
+#### Mutable select (new)
+
+    {
+        "name": "Question",
+        "id": "question",
+        "placeholder": "Answer A\nAnswer B\nAnswer C",
+        "multiple": false,
+        "type": "mutable_select"
+    }
+
+#### Input text (new)
+
+    {
+        "name": "Name",
+        "id": "name",
+        "placeholder": "Firstname",
+        "type": "input_text"
+    }
+
+#### Input textarea (new)
+
+    {
+        "name": "Description",
+        "id": "description",
+        "placeholder": "Description",
+        "type": "input_textarea"
+    }
+
+#### Submit button (new)
+
+    {
+        "name": "Submit",
+        "id": "submit",
+        "placeholder": "Submit",
+        "type": "button_submit"
+    }
+
+#### SMS button (new)
+
+    {
+        "name": "Sms",
+        "id": "sms",
+        "placeholder": "SMS",
+        "type": "button_sms"
+    }
+
+#### Mail button (new)
+
+    {
+        "name": "Mail",
+        "id": "mail",
+        "placeholder": "E-Mail",
+        "type": "button_mail"
+    }
+
+
+
+
 
 ### Field validation
 
