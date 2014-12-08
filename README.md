@@ -249,6 +249,14 @@ TBD
         ...
     }
 
+#### E-Mail validation
+TBD
+
+    {
+        "validateEMail": true,
+        ...
+    }
+
 #### Character limit
 TBD
 
