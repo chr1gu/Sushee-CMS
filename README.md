@@ -220,6 +220,15 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "type": "button_sms"
     }
 
+#### Call button (new)
+
+    {
+        "name": "Call",
+        "id": "call",
+        "placeholder": "Call",
+        "type": "button_call"
+    }
+
 #### Mail button (new)
 
     {
