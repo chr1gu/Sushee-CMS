@@ -94,7 +94,6 @@ hash | The hash is a derivation of data used to authenticate. It represents your
         ]
     }
 
-
 #### Form Module
 
 The form module extends the basic module and needs a minimal `form` configuration to send E-Mails.
@@ -103,6 +102,19 @@ The form module extends the basic module and needs a minimal `form` configuratio
         "name": "Contact",
         "form": {
             "receiver": "chrigu@etite.ch"
+        }
+    }
+
+#### Module messages (TBD)
+
+    {
+        "success": {
+            "message_title": "Success"
+            "message": "Form has been sent"
+        },
+        "error": {
+            "message_title": "Error"
+            "message": "Something went wrong. Try again."
         }
     }
 
