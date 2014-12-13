@@ -109,11 +109,11 @@ The form module extends the basic module and needs a minimal `form` configuratio
 
     {
         "success": {
-            "message_title": "Success"
+            "message_title": "Success",
             "message": "Form has been sent"
         },
         "error": {
-            "message_title": "Error"
+            "message_title": "Error",
             "message": "Something went wrong. Try again."
         }
     }
