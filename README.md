@@ -96,12 +96,16 @@ hash | The hash is a derivation of data used to authenticate. It represents your
 
 #### Form Module
 
-The form module extends the basic module and needs a minimal `form` configuration to send E-Mails.
+The form module extends the basic module and needs a minimal `form` configuration to send E-Mails. Optionally you can configure a message that will be displayed when the user submits the form (see Module messages).
 
     {
         "name": "Contact",
         "form": {
-            "receiver": "chrigu@etite.ch"
+            "receiver": "chrigu@etite.ch",
+            "success": {
+                "message_title": "Success",
+                "message": "Form has been sent"
+            }
         }
     }
 
