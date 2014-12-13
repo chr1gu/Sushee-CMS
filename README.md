@@ -95,6 +95,18 @@ hash | The hash is a derivation of data used to authenticate. It represents your
     }
 
 
+#### Form Module
+
+E-Mail forms need a minimal `form` configuration:
+
+    {
+        "name": "Contact",
+        "form": {
+            "receiver": "chrigu@etite.ch"
+        }
+    }
+
+
 #### Custom icons
 
 You can change the icon displayed in the sidemenu of each module. Just specify an `icon` property for the module. You can use the famous [Entypo Icons](http://gumbyframework.com/docs/ui-kit/#!/icons).
