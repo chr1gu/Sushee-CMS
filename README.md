@@ -97,7 +97,7 @@ hash | The hash is a derivation of data used to authenticate. It represents your
 
 #### Form Module
 
-E-Mail forms need a minimal `form` configuration:
+The form module extends the basic module and needs a minimal `form` configuration to send E-Mails.
 
     {
         "name": "Contact",
