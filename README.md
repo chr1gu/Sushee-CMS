@@ -94,17 +94,57 @@ hash | The hash is a derivation of data used to authenticate. It represents your
         ]
     }
 
+
+Key | Value
+--- | ---
+id | x
+name | x
+single | x
+fields | x
+
+#### Basic Response
+
+    {
+        "success": true,
+        "message": "",
+        "message_title": "",
+        "data": [
+            {
+                "id": x
+                "created_at": 123456789,
+                "updated_at": 344557890,
+                "publish_at": 123455677,
+                "expires_at": 112345667,
+                "fields": [
+                    {
+                        "name": "Name",
+                        "value": "xxx",
+                        ...
+                    },
+                    {
+                        "name": "Message",
+                        "value": "xxx",
+                        ...
+                    }
+                ]
+            }
+        ]
+    }
+
+
 #### Form Module
 
 The form module extends the basic module and needs a minimal `form` configuration to send E-Mails. Optionally you can configure a message that will be displayed when the user submits the form (see Module messages).
 
     {
         "name": "Contact",
-        "form": {
+        "form":
+        {
             "receiver": "chrigu@etite.ch",
             "receiver_subject": "Contactform",
             "receiver_message": "You got a new message:\n",
-            "success": {
+            "success":
+            {
                 "message_title": "Success",
                 "message": "Form has been sent"
             }
