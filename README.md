@@ -218,7 +218,7 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
     {
         "name": "Date",
         "id": "starts_at",
-        "placeholder": "Choose a Date/Time"
+        "placeholder": "Choose a Date/Time",
         "hasTime": true,
         "type": "datetime"
     }
