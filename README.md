@@ -213,16 +213,6 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "type": "youtube"
     }
 
-#### Datetime (new)
-
-    {
-        "name": "Date",
-        "id": "starts_at",
-        "placeholder": "Choose a Date/Time",
-        "hasTime": true,
-        "type": "datetime"
-    }
-
 #### Mutable select (new)
 
     {
@@ -240,6 +230,16 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "id": "name",
         "placeholder": "Firstname",
         "type": "input_text"
+    }
+    
+#### Datetime (new)
+
+    {
+        "name": "Date",
+        "id": "starts_at",
+        "placeholder": "Choose a Date/Time",
+        "hasTime": true,
+        "type": "input_datetime"
     }
 
 #### Input textarea (new)
