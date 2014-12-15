@@ -375,22 +375,6 @@ fields | An array of fields of the given module, you want to return. This can ei
 That's it. Enter some data then simply access your data like this:
 `http://yourhost/videos`
 
-### Configure fields
-You can add additional output information for a field by adding the `static-data` attribute. That data will be attached when you access `http://yourhost/videos`:
-
-    {
-        "module": "videos",
-        "fields": [
-            {
-                "field": "video",
-                "static-data": {
-                    "foo": {
-                        "foo": "bar"
-                    }
-                }
-            }
-        ]
-    }
 
 ### Direct Image Output (base64)
 TBD
