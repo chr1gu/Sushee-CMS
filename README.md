@@ -327,6 +327,15 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
     }
 
 
+#### Field Description (tbd)
+
+    {
+        "name": "Mail",
+        ...
+        "description": "Add a valid e-mail address"
+    }
+
+
 ### Field validation
 
 #### Required fields
