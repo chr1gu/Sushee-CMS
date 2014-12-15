@@ -401,12 +401,6 @@ TBD
 ### Create a detail view
 TBD
 
-### View options
-TBD
-"data-output": "array",
-
-
-
 Roadmap
 -------
 TBD
