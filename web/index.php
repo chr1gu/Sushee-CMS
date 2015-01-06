@@ -12,6 +12,10 @@ if (!$path) {
 
 header('Content-Type: application/json');
 $dataDir = dirname(__FILE__) . '/../data';
+$limit = (int)filter_input(INPUT_GET, "limit");
+$page = filter_input(INPUT_GET, "page");
+if (!$page)
+    $page = 0;
 $viewsDir = $dataDir . '/views';
 
 // "special" file url
@@ -60,6 +64,38 @@ require_once dirname(__FILE__) . '/../src/admin.modules.php';
 
 $adminModule = new AdminModules();
 $module = $adminModule->getModuleById($viewData['module']);
+
+
+// handle form submission here:
+if (!empty($_POST)) {
+    // pre-check
+    if (!isset($module['form']) || !isset($module['form']['receiver_subject']) || !isset($module['form']['receiver_message'])) {
+        $response = array('success' => false);
+        $response['message_title'] = "Konfigurationsfehler";
+        $response['message'] = "Die Nachricht konnte nicht gesendet werden. Versuch es doch einfach nochmal oder schick uns eine Mail an support@sushee.ch";
+        return print (json_encode($response));
+    }
+    $message = $module['form']['receiver_message'];
+    foreach ($_POST as $key => $value) {
+        if ($message) {
+            $message .= "\n\n";
+        }
+        $message .= $key . ":\n" . $value;
+    };
+    //sleep(2);
+    mail($module['form']['receiver'], $module['form']['receiver_subject'], $message);
+
+    $response = array(
+        'success' => true,
+        'message_title' => $module['form']['success']['message_title'],
+        //'message' => serialize($module['form'])
+        'message' => $message
+    );
+    return print (json_encode($response));
+}
+//
+
+
 $data = $adminModule->getData($module, $fields);
 
 // legacy project tweaks for api inconsistency..
@@ -97,8 +133,11 @@ if (isset($viewData['version']) && $viewData['version'] === 0.9) {
 // ..............................................
 
 // display data as array
-if (isset($viewData['data-output']) && $viewData['data-output'] === 'array') {
+/*if (isset($viewData['data-output']) && $viewData['data-output'] === 'array') {
     if ($module['single']) {
+        unset($data['created_at']);
+        unset($data['updated_at']);
+        unset($data['id']);
         $data = array_values($data);
     } else {
         $newData = array();
@@ -107,12 +146,20 @@ if (isset($viewData['data-output']) && $viewData['data-output'] === 'array') {
         }
         $data = $newData;
     }
-}
+}*/
 
+if ($limit > 0) {
+    $totalCount = count($data);
+    $data = array_slice($data, $limit * $page, $limit);
+}
 $response = array(
     'success' => true,
     //'module' => $module,
     'data' => $data
 );
-
+if ($limit > 0) {
+    $response['hasMore'] = $totalCount > ($limit*($page + 1));
+    $response['limit'] = $limit;
+    $response['page'] = $page;
+}
 return print (json_encode($response));

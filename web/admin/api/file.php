@@ -24,6 +24,8 @@ if (!$file) {
     return print ('File-Name nicht vorhanden');
 }
 
+$base64 = empty($base64) ? filter_input(INPUT_GET, 'base64') === "1" : $base64;
+
 $modulesDir = dirname(__FILE__) . '/../../../data/modules/';
 $filePath = $modulesDir . $id . '/' . $file;
 $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
@@ -239,6 +241,10 @@ if (!$content) {
 function resizeImage($filename, $max_width, $max_height, $path, $quality = 75)
 {
     list($orig_width, $orig_height) = getimagesize($filename);
+    // requested thumbnail is bigger than the original one, deliver original image
+    if ($max_width >= $orig_width || $max_height >= $orig_height) {
+        return file_get_contents($filename);
+    }
     $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
     $width = $orig_width;
     $height = $orig_height;
@@ -311,11 +317,17 @@ function resizeImage($filename, $max_width, $max_height, $path, $quality = 75)
     return file_get_contents($path);
 }
 
-header('Content-type: ' . $mime_type);
-
 // return re-sized image
 if (($max_width || $max_height) && !$thumbnailExists) {
-    return print resizeImage($filePath, $max_width, $max_height, $thumbnailPath, $quality);
+    $response = resizeImage($filePath, $max_width, $max_height, $thumbnailPath, $quality);
+} else {
+    $response = $content;
 }
 
-return print $content;
+if ($base64) {
+    header('Content-type: text/plain');
+    $response = 'data:' . $mime_type . ';base64,' . base64_encode($response);
+    return print $response;
+}
+header('Content-type: ' . $mime_type);
+return print $response;

@@ -10,88 +10,6 @@ var fixNavbarHeight = function () {
 $ (window).resize (fixNavbarHeight);
 fixNavbarHeight();
 
-var fieldTypes = {
-    text: function(field, value, moduleId, dataId)
-    {
-        return '<h4>' + field.name + '</h4>' +
-            '<input class="input" type="text" name="' + field.id + '" placeholder="' + (field.placeholder || '') + '" value="' + (value || '') + '" />';
-    },
-    textarea: function(field, value, moduleId, dataId)
-    {
-        return '<h4>' + field.name + '</h4>' +
-            '<textarea class="input textarea" name="' + field.id + '" placeholder="' + (field.placeholder || '') + '">' + (value || '') + '</textarea>';
-    },
-    select: function(field, value, moduleId, dataId)
-    {
-        var html = '<h4>' + field.name + '</h4><div class="picker" style="margin-left:0;">' +
-            '<select class="select" name="' + field.id + '">' +
-            '<option value="">' + (field.placeholder || '') + '</option>';
-        if (field.values && field.values.length) {
-            for (var i=0; i<field.values.length; i++) {
-                var _value = field.values[i];
-                value = value ? value.toString() : "";
-                var isSelected = _value.value.toString() === value;
-                html += '<option value="' + (_value.value || '') + '" ' + (isSelected ? 'selected' : '') + '>' + (_value.label || '') + '</option>'
-            }
-        }
-        html += '</div></select>';
-        return html;
-    },
-    youtube: function(field, value, moduleId, dataId)
-    {
-        value = value || {};
-        value.url = value.url || "";
-        var youtubeUrlDirect = value.url.match(/\?v=([\w-]+)/);
-        var youtubeUrl = youtubeUrlDirect ? 'http://www.youtube.com/embed/' +  youtubeUrlDirect[1] : value.url;
-        var imagePreview = value.name ? ('./api/file.php?id=' + moduleId + '&file=' + value.name + '&width=150&height=150') : '';
-        return '<h4>' +
-            '<span>' + field.name + '</span>' +
-            '<span class="pull_right" style="height: 38px;"><span class="alert-yt-container "></span>&nbsp;</span>' +
-            '</h4>' +
-            '<div class="image photo pull_left rounded switch" gumby-trigger="#preview-' + dataId + '" style="margin-left: 1px !important; background-color: white; cursor: pointer;">' +
-            '<img src="' + (!imagePreview ? './img/thumb_not_available.png' : imagePreview) + '" class="thumb-image-container" style="height:150px;width:150px;" alt="">' +
-            '</div>' +
-            '<div class="modal" id="preview-' + dataId + '">' +
-            '<div class="content">' +
-            '<a class="close switch btn rounded default" gumby-trigger="|#preview-' + dataId + '"><i class="icon-cancel" /></i></a>' +
-            '<div class="row text-center">' +
-            '<article class="youtube video">' +
-            '<iframe width="560" height="315" src="' + youtubeUrl + '"></iframe >' +
-            '</article>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '<input type="hidden" name="' + field.id + '[name]" value="' + (value.name || '') + '" />' +
-            '<input class="input youtube" type="text" name="' + field.id + '[url]" field-id="' + field.id + '" module-id="' + moduleId + '" data-id="' + dataId + '" placeholder="' + (field.placeholder || '') + '" value="' + (value.url || '') + '" />';
-    },
-    image: function(field, value, moduleId, dataId)
-    {
-        value = value || {};
-        var imagePreview = value.name ? ('./api/file.php?id=' + moduleId + '&file=' + value.name) : '';
-        var imagePreviewThumb = imagePreview + '&width=150&height=150';
-        return '<h4>' + field.name + '</h4>' +
-            '<div class="image-preview ' + (!imagePreview ? 'hide' : '') + '">' +
-            '<div class="image photo pull_left rounded switch" gumby-trigger="#preview-' + dataId + '" style="margin-left: 1px !important; background-color: white; cursor: pointer;">' +
-            '<img src="' + (!imagePreview ? './img/thumb_not_available.png' : imagePreviewThumb) + '" class="thumb-image-container" style="height:150px;width:150px;" alt="">' +
-            '</div>' +
-            '<span class="small default btn rounded pull_left" style="margin-left: 10px !important;"><a href="#" data-action="delete-image" field-id="' + field.id + '" data-url="./api/remove.php?id=' + moduleId + '&data-id=' + dataId + '&field-id=' + field.id + '">Bild entfernen</a></span>' +
-            '</div>' +
-            '<div class="modal" id="preview-' + dataId + '">' +
-            '<div class="content">' +
-            '<a class="close switch btn rounded default" gumby-trigger="|#preview-' + dataId + '"><i class="icon-cancel" /></i></a>' +
-            '<div class="row text-center">' +
-            '<img src="' + (!imagePreview ? './img/thumb_not_available.png' : imagePreview) + '" class="image-container" alt="">' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '<div class="danger alert hide"></div>' +
-            '<div class="input">' +
-            '<input class="fileupload" type="file" name="file" data-url="./api/upload.php?id=' + moduleId + '&data-id=' + dataId + '&field-id=' + field.id + '" accept="image/*">' +
-            '<input type="hidden" name="' + field.id + '" value="' + (value.name || '') + '" />'
-            '</div>';
-    }
-};
-
 var getListTemplate = function (content) {
     var template = '<div class="row">\
         <h2>\
@@ -113,8 +31,9 @@ var getListTemplate = function (content) {
     template = template.replace('{table}', (content.data && content.data.length ? table : '<p>Es wurde noch kein Inhalt erfasst.</p>'));
 
     var thead = '<tr>';
-    $.each(content.fields, function(index){
-        var field = content.fields[index];
+    var fields = content.data[0].fields;
+    $.each(fields, function(index){
+        var field = fields[index];
         thead += '<th>' + field.name + '</th>';
     });
     thead += '<th></th>';
@@ -124,18 +43,11 @@ var getListTemplate = function (content) {
     $.each(content.data, function(i){
         var data = content.data[i];
         tbody += '<tr>'
-        $.each(content.fields, function(ii){
-            var field = content.fields[ii];
-            var value = data[field.id] || {};
-            if (field.type === 'image') {
-                var imagePreview = value.name ? ('./api/file.php?id=' + content.id + '&file=' + value.name + '&width=150&height=100&quality=50') : './img/thumb_not_available.png';
-                value = '<a href="#" data-action="edit" module-name="' + content.name + '" module-id="' + content.id + '" data-id="' + data.id + '"><img data-original="' + imagePreview + '" class="lazy list-thumb" /></a>';
-            }
-            if (field.type === 'youtube') {
-                var imagePreview = value.name ? ('./api/file.php?id=' + content.id + '&file=' + value.name + '&width=150&height=100&quality=50') : '';
-                value = '<a href="#" data-action="edit" module-name="' + content.name + '" module-id="' + content.id + '" data-id="' + data.id + '"><img data-original="' + imagePreview + '" class="lazy list-thumb" /></a>';
-            }
-            tbody += '<td>' + value + '</td>';
+        $.each(data.fields, function(ii){
+            var field = data.fields[ii];
+            var value = field.value;
+            var html = fieldsFactory.getListTemplate(field, value, content.id, content.name, data.id);
+            tbody += '<td>' + html + '</td>';
         });
         tbody += '<td><span class="small default btn rounded pull_right"><a href="#" data-action="edit" module-name="' + content.name + '" module-id="' + content.id + '" data-id="' + data.id + '"><i class="icon-cog"></i></a></span></td>';
         tbody += '</tr>';
@@ -147,13 +59,13 @@ var getListTemplate = function (content) {
 
 var getFormTemplate = function (content)
 {
-    var exists = content.data && content.data.created_at !== undefined;
+    var exists = content.data && content.data[0] && content.data[0].created_at !== undefined;
     var template = '<div class="row">\
         <h2 style="padding-bottom: 5px;">\
-            ' + (!content.single && exists ? '<span class="small danger btn rounded pull_right"><a href="#" data-action="delete" module-single="' + content.single + '" module-name="' + content.name + '" module-id="' + content.id + '" data-id="' + content.data.id + '" >Löschen</a></span>' : '') + '\
+            ' + (!content.single && exists ? '<span class="small danger btn rounded pull_right"><a href="#" data-action="delete" module-single="' + content.single + '" module-name="' + content.name + '" module-id="' + content.id + '" data-id="' + content.data[0].id + '" >Löschen</a></span>' : '') + '\
             <span>' + content.name + ' ' + (exists ? 'bearbeiten' : 'hinzufügen') + '</span>\
         </h2>\
-        <div style="font-size:70%;color:#ccc;">Element-ID: ' + content.data.id + '</div>\
+        <div style="font-size:70%;color:#ccc;">Element-ID: ' + content.data[0].id + '</div>\
         <div style="height: 38px;"><span class="alert-container pull_left">&nbsp;</span></div>\
         <form action="api/module.form.php" method="post">\
             <ul>\
@@ -169,14 +81,14 @@ var getFormTemplate = function (content)
     </div>';
 
     var fields = '<li><span></span><input type="hidden" name="id" value="' + content.id + '" />' +
-        '<input type="hidden" name="data-id" value="' + content.data.id + '" /></li>';
+        '<input type="hidden" name="data-id" value="' + content.data[0].id + '" /></li>';
 
-    $.each(content.fields, function(index){
-        var field = content.fields[index];
-        if ('function' === typeof fieldTypes[field.type]) {
-            fields += '<li class="field">' + fieldTypes[field.type](field, content.data[field.id], content.id, content.data.id) + '</li>';
-        } else {
-            console.log('Fieldtype ' + field.type + ' is not defined');
+    // form template = single data record
+    $.each(content.data[0].fields, function(index) {
+        var field = content.data[0].fields[index];
+        var html = fieldsFactory.getTemplate(field, field.value, content.id, content.data[0].id);
+        if (html) {
+            fields += '<li class="field">' + html + '</li>';
         }
     });
     template = template.replace('{fields}', fields);
@@ -287,7 +199,6 @@ function initAjaxContent()
             "data-id": $(this).attr('data-id'),
             "field-id": $(this).attr('field-id')
         }, function(response){
-            console.log(response);
             if (response && typeof response.success === 'boolean' && response.success) {
                 container.find('input[type="hidden"]').val(response.name);
                 container.find('.image img').attr('src', response.url + '&width=150&height=150');

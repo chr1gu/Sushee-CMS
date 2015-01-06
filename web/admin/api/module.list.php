@@ -32,7 +32,6 @@ if (!$module) {
     )));
 }
 
-$fields = $adminModule->getListFieldsForModule($module);
 $data = $adminModule->getListDataForModule($module);
 
 return print (json_encode(array(
@@ -40,6 +39,5 @@ return print (json_encode(array(
     'name' => $module['name'],
     'id' => $module['id'],
     'single' => $module['single'],
-    'fields' => $fields,
     'data' => $data
 )));

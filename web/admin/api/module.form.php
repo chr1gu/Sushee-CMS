@@ -18,6 +18,7 @@ if (!empty($_POST)) {
     $id = filter_input(INPUT_POST, "id");
 }
 $module = $adminModule->getModuleById($id);
+$data = array();
 
 if (!$user) {
     return print (json_encode(array(
@@ -43,31 +44,30 @@ if (!empty($_POST)) {
             'error' => 'Daten-ID nicht vorhanden'
         )));
     }
-    $data = $adminModule->setData($module, $_POST);
-}
-
-$data = null;
-if ($module['single']) {
-    $data = $adminModule->getData($module);
+    $adminModule->setData($module, $_POST);
 }
 
 $dataId = filter_input(INPUT_GET, "data-id");
 if ($dataId) {
-    $dataArray = $adminModule->getData($module, null, $dataId);
-    $data = count($dataArray) ? $dataArray[0] : null;
+    $data = $adminModule->getData($module, null, $dataId);
+}
+else if ($module['single']) {
+    $data = $adminModule->getData($module);
 }
 
-if (!$data) {
+/*if (!$data) {
     $data = array(
         'id' => time()
     );
-}
+}*/
+
+//
 
 return print (json_encode(array(
     'success' => true,
     'name' => $module['name'],
     'id' => $module['id'],
     'single' => $module['single'],
-    'fields' => $module['fields'],
+    //'fields' => $module['fields'],
     'data' => $data
 )));

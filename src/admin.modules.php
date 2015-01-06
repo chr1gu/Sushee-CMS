@@ -44,96 +44,67 @@ class AdminModules
         // loop through data
         $data = array ();
         $dataPattern = $this->modulesDir . $module['id'] . '/' . $dataId . '.json';
-        foreach (glob($dataPattern) as $filename)
+        $files = glob($dataPattern);
+        foreach ($files as $filename)
         {
             $contentRaw = file_get_contents($filename);
             $content = json_decode($contentRaw, true);
-            // if fields are not empty this means we should show only the ones in the array
-            if (!empty($fields)) {
-                $filteredContent = array ();
-                foreach ($fields as $field) {
-                    $fieldName = is_string($field) ? $field : $field['field'];
-                    // if the field does not exist.. skip
-                    if (!isset($content[$fieldName]))
-                        continue;
-                    $filteredContent[$fieldName] = $content[$fieldName];
-                    // add static data
-                    $fieldStaticData = is_array($field) && isset($field['static-data']) ? $field['static-data'] : null;
-                    if ($fieldStaticData) {
-                        // if there is static data but the value is not an object we have to transform it into an object
-                        if (is_object($filteredContent[$fieldName])) {
-                            $filteredContent[$fieldName] = $fieldStaticData;
-                        } else {
-                            $val = $filteredContent[$fieldName];
-                            $filteredContent[$fieldName] = $fieldStaticData;
-                            $filteredContent[$fieldName]['value'] = $val;
-                        }
-                    }
-                }
-                $content = $filteredContent;
-            }
-
-            // add missing field info
-            $content['id'] = isset($content['id']) ? $content['id'] : basename($filename, '.' . pathinfo($filename, PATHINFO_EXTENSION));
-            $content['created_at'] = isset($content['created_at']) ? $content['created_at'] : time();
-            $content['updated_at'] = isset($content['updated_at']) ? $content['updated_at'] : time();
-
-            // add missing/un-stored data for certain fields
-            foreach ($module['fields'] as $field) {
-                if (isset($content[$field['id']])) {
-                    if ($field['type'] === 'image') {
-                        $fieldValue = $content[$field['id']];
-                        // if fieldValue is already an object, attach your data
-                        if (is_array($fieldValue)) {
-                            $rawValue = $fieldValue['value'];
-                            $url = $rawValue ? 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/admin/api/file.php?id=' . $module['id'] . '&file=' . $rawValue : '';
-                            $content[$field['id']]['name'] = $rawValue;
-                            $content[$field['id']]['url'] = $url;
-                        } else {
-                            $url = $fieldValue ? 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/admin/api/file.php?id=' . $module['id'] . '&file=' . $fieldValue : '';
-                            $content[$field['id']] = array(
-                                'name' => $fieldValue,
-                                'url' => $url
-                            );
-                        }
-                    } else if ($field['type'] === 'youtube') {
-                        $val = $content[$field['id']];
-                        $url = $val ? 'http://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/admin/api/file.php?id=' . $module['id'] . '&file=' . $val['name'] : '';
-                        $val['image'] = $url;
-                        $content[$field['id']] = $val;
-                    }
-                }
-            }
-
-            $data[] = $content;
+            $data[] = $this->getDataRecord($module, $content, $this->getId($filename));
         }
-
-        // handle single data
+        // for single modules, always return one item
         if ($module['single']) {
-            if (!empty($data)) {
-                $data = $data[0];
-            } else {
-                $emptyData = array();
-                foreach ($module['fields'] as $field) {
-                    $emptyValue = '';
-                    if ($field['type'] === 'image' || $field['type'] === 'youtube') {
-                        $emptyValue = array(
-                            'url' => '',
-                            'name' => ''
-                        );
-                    }
-                    $emptyData[$field['id']] = $emptyValue;
-                }
-                $data = $emptyData;
-                $data['id'] = time();
-                $data['created_at'] = time();
-                $data['updated_at'] = time();
-            }
+            if (count($data) > 0)
+                return array($data[0]);
+            else
+                $data[] = $this->getDataRecord($module, array(), $this->getId());
         }
-
         return $data;
     }
-    
+
+    protected function getId($filename = null)
+    {
+        if ($filename != null) {
+            $base = basename($filename);
+            $withoutExt = preg_replace('/\\.[^.\\s]{3,4}$/', '', $base);
+            return $withoutExt;
+        }
+        return time();
+    }
+
+    protected function getDataRecord($module, $data, $id = null)
+    {
+        $apiHost = 'http://' . $_SERVER['HTTP_HOST'] . '/admin/api';
+        $fields = $module['fields'];
+        $record = array();
+        $fieldData = array();
+        $data = !empty($data) ? $data : array();
+        foreach ($fields as $field) {
+            if (isset($data[$field['id']])) {
+                $value = $data[$field['id']];
+                // inject youtube previews
+                if ($field['type'] === 'youtube' && isset($data[$field['id'] . '_preview'])) {
+                    $field['preview'] = $data[$field['id'] . '_preview'];
+                }
+                if ($field['type'] === 'image') {
+                    $field['preview'] =  $apiHost . '/file.php?id=' . $module['id'] . '&file=' . $value;
+                }
+                //if (is_array($value)) {
+                //    return array_merge($field, $value);
+                //} else {
+                    $field['value'] = $value;
+                //}
+            } else {
+                $field['value'] = "";
+            }
+            $fieldData[] = $field;
+        }
+        $record['id'] = $id !== null ? $id : $this->getId();
+        $record['created_at'] = isset($data['created_at']) ? $data['created_at'] : time();
+        $record['updated_at'] = isset($data['updated_at']) ? $data['updated_at'] : time();
+        $record['fields'] = $fieldData;
+        return $record;
+    }
+
     public function setData ($module, $data)
     {
         $dataDirectory = $this->modulesDir . $module['id'];
@@ -148,12 +119,11 @@ class AdminModules
             // file exists
             $existingData = json_decode(file_get_contents($dataPattern), true);
             $existingData['updated_at'] = time();
-            foreach ($module['fields'] as $field) {
+            for ($i = 0; $i<count($module['fields']); $i++) {
+                $field = $module['fields'][$i];
                 $id = $field['id'];
-                // empty value based on type of field
-                // this could be an empty string, a false boolean, an empty array or a zero
-                $empty = "";
-                $existingData[$id] = (isset($data[$id]) ? $data[$id] : $empty);
+                if (isset($data[$id]))
+                    $existingData[$id] = $data[$id];
             }
             file_put_contents($dataPattern, json_encode($existingData));
             return $existingData;
@@ -181,24 +151,6 @@ class AdminModules
             return $data;
 
         return $this->getData($module, $module['list-fields']);
-    }
-
-    function getListFieldsForModule ($module)
-    {
-        if (!$module || empty($module['list-fields'])) {
-            return array();
-        }
-        $fields = $module['fields'];
-        $listFields = $module['list-fields'];
-        $validFields = array();
-        foreach ($listFields as $listField) {
-            foreach ($fields as $field) {
-                if ($listField === $field['id']) {
-                    $validFields[] = $field;
-                }
-            }
-        }
-        return $validFields;
     }
 
     function getVerifiedModules ($modules)
