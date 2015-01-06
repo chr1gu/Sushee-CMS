@@ -95,6 +95,76 @@ hash | The hash is a derivation of data used to authenticate. It represents your
     }
 
 
+Key | Value
+--- | ---
+id | x
+name | x
+single | x
+fields | x
+
+#### Basic Response
+
+    {
+        "success": true,
+        "message": "",
+        "message_title": "",
+        "data": [
+            {
+                "id": x
+                "created_at": 123456789,
+                "updated_at": 344557890,
+                "publish_at": 123455677,
+                "expires_at": 112345667,
+                "fields": [
+                    {
+                        "name": "Name",
+                        "value": "xxx",
+                        ...
+                    },
+                    {
+                        "name": "Message",
+                        "value": "xxx",
+                        ...
+                    }
+                ]
+            }
+        ]
+    }
+
+
+#### Form Module
+
+The form module extends the basic module and needs a minimal `form` configuration to send E-Mails. Optionally you can configure a message that will be displayed when the user submits the form (see Module messages).
+
+    {
+        "name": "Contact",
+        "form":
+        {
+            "receiver": "chrigu@etite.ch",
+            "receiver_subject": "Contactform",
+            "receiver_message": "You got a new message:\n",
+            "success":
+            {
+                "message_title": "Success",
+                "message": "Form has been sent"
+            }
+        }
+    }
+
+#### Module messages (TBD)
+
+    {
+        "success": {
+            "message_title": "Success",
+            "message": "Form has been sent"
+        },
+        "error": {
+            "message_title": "Error",
+            "message": "Something went wrong. Try again."
+        }
+    }
+
+
 #### Custom icons
 
 You can change the icon displayed in the sidemenu of each module. Just specify an `icon` property for the module. You can use the famous [Entypo Icons](http://gumbyframework.com/docs/ui-kit/#!/icons).
@@ -113,6 +183,15 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "id": "name",
         "placeholder": "",
         "type": "text"
+    }
+    
+#### Title
+
+    {
+        "name": "Title",
+        "id": "title",
+        "placeholder": "",
+        "type": "title"
     }
 
 #### E-Mail
@@ -156,7 +235,6 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         ]
     }
 
-
 #### Image
 
     {
@@ -175,6 +253,89 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "type": "youtube"
     }
 
+#### Mutable select (new)
+
+    {
+        "name": "Question",
+        "id": "question",
+        "placeholder": "Answer A\nAnswer B\nAnswer C",
+        "multiple": false,
+        "type": "mutable_select"
+    }
+
+#### Input text (new)
+
+    {
+        "name": "Name",
+        "id": "name",
+        "placeholder": "Firstname",
+        "type": "input_text"
+    }
+    
+#### Datetime (new)
+
+    {
+        "name": "Date",
+        "id": "starts_at",
+        "placeholder": "Choose a Date/Time",
+        "hasTime": true,
+        "type": "input_datetime"
+    }
+
+#### Input textarea (new)
+
+    {
+        "name": "Description",
+        "id": "description",
+        "placeholder": "Description",
+        "type": "input_textarea"
+    }
+
+#### Submit button (new)
+
+    {
+        "name": "Submit",
+        "id": "submit",
+        "type": "button_submit"
+    }
+
+#### SMS button (new)
+
+    {
+        "name": "Sms",
+        "id": "sms",
+        "placeholder": "+41761234567",
+        "type": "button_sms"
+    }
+
+#### Call button (new)
+
+    {
+        "name": "Call",
+        "id": "call",
+        "placeholder": "+41761234567",
+        "type": "button_call"
+    }
+
+#### Mail button (new)
+
+    {
+        "name": "Mail",
+        "id": "mail",
+        "placeholder": "test@example.com",
+        "type": "button_mail"
+    }
+
+
+#### Field Description (tbd)
+
+    {
+        "name": "Mail",
+        ...
+        "description": "Add a valid e-mail address"
+    }
+
+
 ### Field validation
 
 #### Required fields
@@ -182,6 +343,14 @@ TBD
 
     {
         "required": true,
+        ...
+    }
+
+#### E-Mail validation
+TBD
+
+    {
+        "validateEMail": true,
         ...
     }
 
@@ -215,31 +384,15 @@ fields | An array of fields of the given module, you want to return. This can ei
 That's it. Enter some data then simply access your data like this:
 `http://yourhost/videos`
 
-### Configure fields
-You can add additional output information for a field by adding the `static-data` attribute. That data will be attached when you access `http://yourhost/videos`:
 
-    {
-        "module": "videos",
-        "fields": [
-            {
-                "field": "video",
-                "static-data": {
-                    "foo": {
-                        "foo": "bar"
-                    }
-                }
-            }
-        ]
-    }
+### Direct Image Output (base64)
+TBD
+
+    "base64": true,
+
 
 ### Create a detail view
 TBD
-
-### View options
-TBD
-"data-output": "array",
-
-
 
 Roadmap
 -------
