@@ -87,6 +87,8 @@ class AdminModules
                 }
                 if ($field['type'] === 'image') {
                     $field['preview'] =  $apiHost . '/file.php?id=' . $module['id'] . '&file=' . $value;
+                    if (preg_match('/[0-9]+x[0-9]+/', $value, $dimensions))
+                        $field['dimensions'] =  $dimensions[0];
                 }
                 //if (is_array($value)) {
                 //    return array_merge($field, $value);

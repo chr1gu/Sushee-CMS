@@ -89,10 +89,12 @@ var fieldsFactory = function()
                 }
                 case "input_text":
                 case "input_textarea":
+                case "input_datetime":
                 case "button_submit":
                 {
                     // return an empty string if there is no interaction possible
-                    return '';
+                    return '<h4>' + field.name + '</h4>' +
+                    '<span>' + '&nbsp;' + '</span>';
                 }
                 default: {
                     console.log('Fieldtype ' + field.type + ' is not defined');

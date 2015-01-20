@@ -108,7 +108,8 @@ if ($_FILES["file"]["error"] > 0) {
 //    )));
 //}
 
-$filePath = $dataDir . $module . '/' . $id . '_' . $fieldId . '.' . $extension;
+$imagesize = getimagesize($_FILES["file"]["tmp_name"]);
+$filePath = $dataDir . $module . '/' . $id . '_' . $fieldId . '_' . $imagesize[0] . 'x' . $imagesize[1] . '.' . $extension;
 $thumbnails = $dataDir . $module . '/' . $id . '_' . $fieldId . '.resized-*';
 // remove already existing file
 if (file_exists($filePath)) {
