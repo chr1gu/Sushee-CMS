@@ -31,7 +31,7 @@ var getListTemplate = function (content) {
     template = template.replace('{table}', (content.data && content.data.length ? table : '<p>Es wurde noch kein Inhalt erfasst.</p>'));
 
     var thead = '<tr>';
-    var fields = content.data[0].fields;
+    var fields = content.fields;
     $.each(fields, function(index){
         var field = fields[index];
         thead += '<th>' + field.name + '</th>';
@@ -60,12 +60,13 @@ var getListTemplate = function (content) {
 var getFormTemplate = function (content)
 {
     var exists = content.data && content.data[0] && content.data[0].created_at !== undefined;
+    var dataId = exists ? content.data[0].id : new Date().getTime();
     var template = '<div class="row">\
         <h2 style="padding-bottom: 5px;">\
             ' + (!content.single && exists ? '<span class="small danger btn rounded pull_right"><a href="#" data-action="delete" module-single="' + content.single + '" module-name="' + content.name + '" module-id="' + content.id + '" data-id="' + content.data[0].id + '" >Löschen</a></span>' : '') + '\
             <span>' + content.name + ' ' + (exists ? 'bearbeiten' : 'hinzufügen') + '</span>\
         </h2>\
-        <div style="font-size:70%;color:#ccc;">Element-ID: ' + content.data[0].id + '</div>\
+        <div style="font-size:70%;color:#ccc;">Element-ID: ' + dataId + '</div>\
         <div style="height: 38px;"><span class="alert-container pull_left">&nbsp;</span></div>\
         <form action="api/module.form.php" method="post">\
             <ul>\
@@ -81,12 +82,12 @@ var getFormTemplate = function (content)
     </div>';
 
     var fields = '<li><span></span><input type="hidden" name="id" value="' + content.id + '" />' +
-        '<input type="hidden" name="data-id" value="' + content.data[0].id + '" /></li>';
+        '<input type="hidden" name="data-id" value="' + dataId + '" /></li>';
 
     // form template = single data record
-    $.each(content.data[0].fields, function(index) {
-        var field = content.data[0].fields[index];
-        var html = fieldsFactory.getTemplate(field, field.value, content.id, content.data[0].id);
+    $.each(content.fields, function(index) {
+        var field = content.fields[index];
+        var html = fieldsFactory.getTemplate(field, exists ? content.data[0].fields[index].value : null, content.id, dataId);
         if (html) {
             fields += '<li class="field">' + html + '</li>';
         }
@@ -125,13 +126,13 @@ function initAjaxContent()
     // add new
     $('#admin-content a[data-action="new"]').click(function(e){
         e.preventDefault();
-        loadModule($(this).attr('module-id'), $(this).attr('module-name'), true);
+        loadModule($(this).attr('module-id'), true);
     });
 
     // edit
     $('#admin-content a[data-action="edit"]').click(function(e){
         e.preventDefault();
-        loadModule($(this).attr('module-id'), $(this).attr('module-name'), true, $(this).attr('data-id'));
+        loadModule($(this).attr('module-id'), true, $(this).attr('data-id'));
     });
 
     // delete
@@ -148,7 +149,7 @@ function initAjaxContent()
             }, function(response) {
                 response = response || {};
                 if (response.success === true) {
-                    loadModule(id, name, single);
+                    loadModule(id, single);
                 } else {
                     $('.alert-container').hide()
                         .html('<div class="danger alert">' + (response.error || 'Fehler beim Löschen') + '</div>')
@@ -177,7 +178,7 @@ function initAjaxContent()
         var id = $(this).attr('module-id');
         var single = $(this).attr('module-single') === "true";
         var name = $(this).attr('module-name');
-        loadModule(id, name, single);
+        loadModule(id, single);
     });
 
     // lazy load images
@@ -219,10 +220,10 @@ function initAjaxContent()
 }
 
 var moduleRequest;
-function loadModule (id, name, single, dataid)
+function loadModule (id, single, dataid)
 {
     var loadingTimeout = setTimeout(function(){
-        $('#admin-content').html('<div class="row"><h2>Wird geladen...</h2><p>Das ' + name + '-Modul wird jeden Moment angezeigt.</p></div>');
+        $('#admin-content').html('<div class="row"><h2>Wird geladen...</h2><p>Das Modul wird jeden Moment angezeigt.</p></div>');
     }, 300);
     var script = single ? "./api/module.form.php" : "./api/module.list.php";
     if (moduleRequest) {
@@ -247,19 +248,56 @@ function loadModule (id, name, single, dataid)
     });
 }
 
+function loadController (controller, options)
+{
+    var loadingTimeout = setTimeout(function(){
+        $('#admin-content').html('<div class="row"><h2>Wird geladen...</h2><p>Das Modul wird jeden Moment angezeigt.</p></div>');
+    }, 300);
+    if (moduleRequest) {
+        moduleRequest.abort();
+    }
+    var params = {};
+    if (options) {
+        params = options.replace(/(^\?)/,'').split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this}.bind({}))[0];
+    }
+    params.controller = controller;
+    moduleRequest = $.get("./api/module.custom.php", params).always(function(data) {
+        clearTimeout(loadingTimeout);
+        // ignore aborted requests
+        if (data.status === 0) return;
+        if (data.success === true) {
+            //var template = !single ? getListTemplate(data) : getFormTemplate(data);
+            $('#admin-content').html(data.html);
+            initAjaxContent();
+        } else {
+            $('#admin-content').html('<div class="row"><h2>Oops...</h2><p>Irgendwas ist schief gelaufen! Das Modul konnte nicht geladen werden.</p></div>');
+        }
+        $(window).scrollTop(0);
+        fixNavbarHeight();
+    });
+}
+
 // navi
 $('.side-navigation a').click(function(e){
     e.preventDefault ();
     var id = $(this).attr('module-id');
     var html = $(this).attr('module-html');
+    var controller = $(this).attr('module-controller');
+    var options = '';
+    if (controller && controller.indexOf('?') !== -1) {
+        options = controller.substr(controller.indexOf('?') + 1);
+        controller = controller.substr(0, controller.indexOf('?'));
+    }
     var single = $(this).attr('module-single') === "true";
-    var name = $(this).text();
     $('.side-navigation .active').removeClass('active');
     $(this).parent().addClass ('active');
-    if (id) {
-        loadModule(id, name, single);
+    if (controller) {
+        loadController(controller, options);
     }
-    if (html) {
+    else if (id) {
+        loadModule(id, single);
+    }
+    else if (html) {
         $('#admin-content').html($('#' + html).html());
     }
 });

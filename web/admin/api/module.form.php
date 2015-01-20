@@ -68,6 +68,6 @@ return print (json_encode(array(
     'name' => $module['name'],
     'id' => $module['id'],
     'single' => $module['single'],
-    //'fields' => $module['fields'],
+    'fields' => $module['fields'],
     'data' => $data
 )));

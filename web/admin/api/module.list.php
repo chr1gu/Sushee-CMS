@@ -39,5 +39,6 @@ return print (json_encode(array(
     'name' => $module['name'],
     'id' => $module['id'],
     'single' => $module['single'],
-    'data' => $data
+    'data' => $data,
+    'fields' => $module['fields']
 )));

@@ -158,6 +158,13 @@ class AdminModules
         $verifiedModules = array();
         foreach ($modules as $module)
         {
+            // custom modules
+            if (isset($module['name']) && !empty($module['name']) && isset($module['controller']) && is_file(dirname(__FILE__) . '/../' . $module['controller'])) {
+                $verifiedModules[] = $module;
+                continue;
+            }
+
+            // regular modules
             if (!isset($module['name']) || empty($module['name']))
                 continue;
 

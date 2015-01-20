@@ -33,7 +33,11 @@ class AdminOverview
         foreach ($this->modules as $module) {
             $single = $module['single'] ? "true" : "false";
             $icon = isset($module['icon']) ? $module['icon'] : 'icon-plus';
-            $html .= '<li><a href="#" module-single="' . $single . '" module-id="' . $module['id'] . '"><i class="' . $icon . '"></i><span>' . $module['name'] . '</span></a></li>';
+            $controller = isset($module['controller']) ? $module['controller'] : '';
+            if (!empty($controller) && isset($module['options'])) {
+                $controller .=  ('?' . http_build_query($module['options']));
+            }
+            $html .= '<li><a href="#" module-controller="' . $controller . '" module-single="' . $single . '" module-id="' . $module['id'] . '"><i class="' . $icon . '"></i><span>' . $module['name'] . '</span></a></li>';
         }
         return $html;
     }
