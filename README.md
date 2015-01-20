@@ -102,6 +102,7 @@ name | x
 single | x
 fields | x
 
+
 #### Basic Response
 
     {
@@ -164,6 +165,26 @@ The form module extends the basic module and needs a minimal `form` configuratio
         }
     }
 
+
+#### Push Module (tbd)
+
+    {
+        "name": "Push",
+        "controller": "src/modules/push.module.php",
+        "options": {
+            
+        }
+    }
+
+#### Custom Module (tbd)
+
+    {
+        "name": "Custom",
+        "controller": "path/to/custom/module.php",
+        "options": {
+            
+        }
+    }
 
 #### Custom icons
 
