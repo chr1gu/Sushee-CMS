@@ -357,6 +357,32 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
     }
 
 
+### Field actions
+
+#### Map / Location actions
+
+    {
+        "name": "Location",
+        "id": "location",
+        "type": "text",
+        "actions": [
+            {
+                "title": "Contact form",
+                "action": "CHANGE_VIEW",
+                "option": 3
+            },
+            {
+                "title": "Google Maps",
+                "action": "OPEN_GOOGLE_MAPS"
+            },
+            {
+                "title": "Cancel",
+                "action": "CANCEL"
+            }
+        ]
+    }
+
+
 ### Field validation
 
 #### Required fields
