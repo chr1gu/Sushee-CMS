@@ -348,6 +348,13 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
     }
 
 
+#### Spacer (new)
+
+    {
+        "type": "spacer",
+        "height": 100
+    }
+
 #### Field Description (tbd)
 
     {
