@@ -360,11 +360,11 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
     {
         "name": "Mail",
         ...
-        "padding": {
-            "top": 0,
-            "left": 0,
-            "right": 0,
-            "bottom": 5
+        "Padding": {
+            "Top": 0,
+            "Left": 0,
+            "Right": 0,
+            "Bottom": 5
         }
     }
 
