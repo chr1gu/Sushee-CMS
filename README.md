@@ -347,14 +347,6 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "type": "button_mail"
     }
 
-
-#### Spacer (new)
-
-    {
-        "type": "spacer",
-        "height": 100
-    }
-
 #### Field Description (tbd)
 
     {
@@ -363,6 +355,18 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "description": "Add a valid e-mail address"
     }
 
+#### Field Padding (tbd)
+
+    {
+        "name": "Mail",
+        ...
+        "padding": {
+            "top": 0,
+            "left": 0,
+            "right": 0,
+            "bottom": 5
+        }
+    }
 
 ### Field actions
 
