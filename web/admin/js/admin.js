@@ -100,25 +100,29 @@ function initAjaxContent()
 {
     // save data
     $('#admin-content form').submit(function(e){
+        if (e.isDefaultPrevented())
+            return;
         e.preventDefault();
         $('input').blur();
         var form = $(this);
         var params = form.serialize();
         var alertContainer = form.parent().find('.alert-container');
-        alertContainer.hide().html('<div class="secondary alert">Inhalt wird gespeichert...</div>');
+        alertContainer.hide().html('<div class="secondary alert">Wird geladen...</div>');
         alertContainer.fadeIn();
 
         $.post(form.attr('action'), params)
             .always(function(data) {
                 data = data || {};
                 if (data.success === true) {
-                    alertContainer.html('<div class="success alert">Inhalt gespeichert!</div>');
+                    alertContainer.html('<div class="success alert">' + (data.message || 'Inhalt gespeichert!') + '</div>');
                     setTimeout(function(){
                         alertContainer.fadeOut();
                     }, 1000);
+                    form.trigger( "submit-success" );
                 } else {
                     var error = typeof data.error === 'string' ? data.error : 'Fehler beim Speichern!';
                     alertContainer.html('<div class="danger alert">' + error + '</div>');
+                    form.trigger( "submit-error" );
                 }
             });
     });
@@ -258,7 +262,7 @@ function loadController (controller, options)
     }
     var params = {};
     if (options) {
-        params = options.replace(/(^\?)/,'').split("&").map(function(n){return n = n.split("="),this[n[0]] = n[1],this}.bind({}))[0];
+        params = JSON.parse('{"' + decodeURI(options).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
     }
     params.controller = controller;
     moduleRequest = $.get("./api/module.custom.php", params).always(function(data) {
