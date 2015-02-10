@@ -347,13 +347,52 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "type": "button_mail"
     }
 
-
 #### Field Description (tbd)
 
     {
         "name": "Mail",
         ...
         "description": "Add a valid e-mail address"
+    }
+
+#### Field Padding (tbd)
+
+    {
+        "name": "Mail",
+        ...
+        "Padding": {
+            "Top": 0,
+            "Left": 0,
+            "Right": 0,
+            "Bottom": 5
+        }
+    }
+
+### Field actions
+
+#### Map / Location actions
+
+    {
+        "name": "Location",
+        "id": "location",
+        "zoomLevel": 1,
+        "initialZoomLevel": 4.0,
+        "type": "text",
+        "actions": [
+            {
+                "title": "Contact form",
+                "action": "CHANGE_VIEW",
+                "option": 3
+            },
+            {
+                "title": "Google Maps",
+                "action": "OPEN_GOOGLE_MAPS"
+            },
+            {
+                "title": "Cancel",
+                "action": "CANCEL"
+            }
+        ]
     }
 
 
