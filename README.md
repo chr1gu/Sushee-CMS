@@ -172,7 +172,18 @@ The form module extends the basic module and needs a minimal `form` configuratio
         "name": "Push",
         "controller": "src/modules/push.module.php",
         "options": {
-            
+            "parse-application-id": "xxx",
+            "parse-rest-api-key": "xxx",
+            "push-pages": [
+                {
+                    "label": "Team",
+                    "id": "team"
+                },
+                {
+                    "label": "Kontakt",
+                    "id": "contact"
+                }
+            ]
         }
     }
 
