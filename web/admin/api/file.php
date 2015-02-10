@@ -304,9 +304,9 @@ function resizeImage($filename, $max_width, $max_height, $path, $quality = 75)
             imagealphablending($thumb, false);
             imagesavealpha($thumb, true);
             imagecopyresampled($thumb, $source, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $orig_width, $orig_height);
-            $maxCompression = 9;
-            $compression = round($maxCompression - ($maxCompression/100*$quality));
-            imagepng($thumb, $path, $compression, PNG_ALL_FILTERS);
+            //$maxCompression = 9;
+            //$compression = round($maxCompression - ($maxCompression/100*$quality));
+            imagepng($thumb, $path, 9, PNG_ALL_FILTERS);
             break;
         default:
             $source = imagecreatefromjpeg($filename);
