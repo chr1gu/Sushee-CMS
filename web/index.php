@@ -89,15 +89,14 @@ if (!empty($_POST)) {
     };
     $message .= "\n" . $module['form']['receiver_message_footer'];
     $subject = $module['form']['receiver_subject'];
-    $subject = str_replace('{DATETIME}', date("d.m.y H:m"), $subject);
-    $message = str_replace('{DATETIME}', date("d.m.y H:m"), $message);
+    $subject = str_replace('{DATETIME}', date("d.m.y H:i"), $subject);
+    $message = str_replace('{DATETIME}', date("d.m.y H:i"), $message);
 
     mail($module['form']['receiver'], $subject, $message, $headers);
 
     $response = array(
         'success' => true,
         'message_title' => $module['form']['success']['message_title'],
-        //'message' => serialize($module['form'])
         'message' => $message
     );
     return print (json_encode($response));
