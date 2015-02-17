@@ -83,14 +83,16 @@ if (!empty($_POST)) {
     }
     foreach ($_POST as $key => $value) {
         if ($message) {
-            $message .= "\n";
+            $message .= "\n\n";
         }
         $message .= $key . ":\n" . $value;
     };
     $message .= "\n" . $module['form']['receiver_message_footer'];
+    $subject = $module['form']['receiver_subject'];
+    $subject = str_replace('{DATETIME}', date("d.m.y H:m"), $subject);
+    $message = str_replace('{DATETIME}', date("d.m.y H:m"), $message);
 
-    //sleep(2);
-    mail($module['form']['receiver'], $module['form']['receiver_subject'], $message, $headers);
+    mail($module['form']['receiver'], $subject, $message, $headers);
 
     $response = array(
         'success' => true,
