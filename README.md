@@ -145,6 +145,7 @@ The form module extends the basic module and needs a minimal `form` configuratio
             "receiver": "toast@example.ch",
             "receiver_subject": "Contactform",
             "receiver_message": "You got a new message:\n",
+            "receiver_message_footer": "\ncredits to my app",
             "success":
             {
                 "message_title": "Success",
