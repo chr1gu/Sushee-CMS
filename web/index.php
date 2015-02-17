@@ -76,14 +76,21 @@ if (!empty($_POST)) {
         return print (json_encode($response));
     }
     $message = $module['form']['receiver_message'];
+    $headers = '';
+    if (isset($module['form']['sender'])) {
+        $headers = 'From: ' . $module['form']['sender'] . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+    }
     foreach ($_POST as $key => $value) {
         if ($message) {
-            $message .= "\n\n";
+            $message .= "\n";
         }
         $message .= $key . ":\n" . $value;
     };
+    $message .= "\n" . $module['form']['receiver_message_footer'];
+
     //sleep(2);
-    mail($module['form']['receiver'], $module['form']['receiver_subject'], $message);
+    mail($module['form']['receiver'], $module['form']['receiver_subject'], $message, $headers);
 
     $response = array(
         'success' => true,
