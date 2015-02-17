@@ -141,7 +141,8 @@ The form module extends the basic module and needs a minimal `form` configuratio
         "name": "Contact",
         "form":
         {
-            "receiver": "chrigu@etite.ch",
+            "sender": "test@example.ch",
+            "receiver": "toast@example.ch",
             "receiver_subject": "Contactform",
             "receiver_message": "You got a new message:\n",
             "success":
