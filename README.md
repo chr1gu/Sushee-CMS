@@ -390,6 +390,7 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "id": "location",
         "zoomLevel": 1,
         "initialZoomLevel": 4.0,
+        "center": "46.947273, 7.447570",
         "type": "text",
         "actions": [
             {
