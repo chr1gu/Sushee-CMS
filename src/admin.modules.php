@@ -86,7 +86,8 @@ class AdminModules
                     $field['preview'] = $data[$field['id'] . '_preview'];
                 }
                 if ($field['type'] === 'image') {
-                    $field['preview'] =  $apiHost . '/file.php?id=' . $module['id'] . '&file=' . $value;
+                    $preview = $apiHost . '/file.php?id=' . $module['id'] . '&file=' . $value;
+                    $field['preview'] =  $value ? $preview : "";
                     if (preg_match('/[0-9]+x[0-9]+/', $value, $dimensions))
                         $field['dimensions'] =  $dimensions[0];
                 }
@@ -148,10 +149,9 @@ class AdminModules
 
     function getListDataForModule ($module)
     {
-        $data = array ();
         if (!$module || !isset($module['id']) || !isset($module['list-fields']) || !is_array($module['list-fields']))
-            return $data;
-
+            // todo: throw error here.. like "list-fields not configured"
+            return array();
         return $this->getData($module, $module['list-fields']);
     }
 
