@@ -18,7 +18,9 @@ if (!$user) {
     )));
 }
 
-$dataDir = dirname(__FILE__) . '/../../../data/modules/';
+$modulesDir = dirname(__FILE__) . '/../../../data/';
+$dataDir = $modulesDir . 'modules/';
+
 $id = filter_input(INPUT_GET, 'data-id');
 if (!$id) {
     return print (json_encode(array(
@@ -43,12 +45,22 @@ if (!$module) {
     )));
 }
 
-if (!is_dir($dataDir)) {
+if (!is_dir($modulesDir)) {
     return print (json_encode(array(
         'success' => false,
         'error' => 'Datenverzeichnis konnte nicht gelesen werden'
     )));
 }
+
+if (!is_dir($dataDir)) {
+    if (mkdir ($dataDir) !== true) {
+        return print (json_encode(array(
+            'success' => false,
+            'error' => 'Datenverzeichnis konnte nicht erstellt werden'
+        )));
+    }
+}
+
 $moduleDir = $dataDir . $module . '/';
 if (!is_dir($moduleDir)) {
     mkdir($moduleDir);

@@ -141,9 +141,11 @@ The form module extends the basic module and needs a minimal `form` configuratio
         "name": "Contact",
         "form":
         {
-            "receiver": "chrigu@etite.ch",
+            "sender": "test@example.ch",
+            "receiver": "toast@example.ch",
             "receiver_subject": "Contactform",
             "receiver_message": "You got a new message:\n",
+            "receiver_message_footer": "\ncredits to my app",
             "success":
             {
                 "message_title": "Success",
@@ -172,7 +174,18 @@ The form module extends the basic module and needs a minimal `form` configuratio
         "name": "Push",
         "controller": "src/modules/push.module.php",
         "options": {
-            
+            "parse-application-id": "xxx",
+            "parse-rest-api-key": "xxx",
+            "push-pages": [
+                {
+                    "label": "Team",
+                    "id": "team"
+                },
+                {
+                    "label": "Kontakt",
+                    "id": "contact"
+                }
+            ]
         }
     }
 
@@ -377,6 +390,7 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "id": "location",
         "zoomLevel": 1,
         "initialZoomLevel": 4.0,
+        "center": "46.947273, 7.447570",
         "type": "text",
         "actions": [
             {
