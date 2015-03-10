@@ -419,6 +419,14 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "decorator": "staticMap",
         ...
     }
+    
+#### Parallax Footer Map
+
+    {
+        "name": "Location",
+        "decorator": "footerMap",
+        ...
+    }
 
 #### Hero Image
 
