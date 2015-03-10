@@ -391,7 +391,9 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         "centerCoordinate": "46.947273, 7.447570",
         "eyeCoordinate": "46.947273, 7.407570",
         "eyeAltitude": 2000,
-        "initialEyeAltitude": 6000,
+        "heading": 0,
+        "initialEyeAltitude": 6000"
+        "initialHeading": 30
         "type": "text",
         "actions": [
             {
