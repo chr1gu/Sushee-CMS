@@ -409,6 +409,15 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         ]
     }
 
+#### Static Map
+
+    {
+        "name": "Location",
+        "id": "location",
+        "staticMap": true,
+        ...
+    }
+
 
 ### Field validation
 
