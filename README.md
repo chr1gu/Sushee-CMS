@@ -410,12 +410,29 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
         ]
     }
 
+### Media View Field decorators
+
 #### Static Map
 
     {
         "name": "Location",
-        "id": "location",
         "decorator": "staticMap",
+        ...
+    }
+
+#### Hero Image
+
+    {
+        "name": "Image",
+        "decorator": "heroImage",
+        ...
+    }
+
+#### Rating
+
+    {
+        "name": "Rating",
+        "decorator": "rating",
         ...
     }
 
