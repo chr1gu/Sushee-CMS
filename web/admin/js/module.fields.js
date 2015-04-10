@@ -39,9 +39,10 @@ var fieldsFactory = function()
                 }
                 case "youtube":
                 {
-                    var youtubeUrlDirect = value.match(/\?v=([\w-]+)/);
-                    var youtubeUrl = youtubeUrlDirect ? 'http://www.youtube.com/embed/' +  youtubeUrlDirect[1] : value;
-                    var imagePreview = field.preview ? ('./api/file.php?id=' + moduleId + '&file=' + field.preview + '&width=150&height=150') : '';
+                    var youtubeUrlDirect = value != null ? value.match(/\?v=([\w-]+)/) : null;
+                    var preview = field.preview || '';
+                    var youtubeUrl = youtubeUrlDirect != null ? 'http://www.youtube.com/embed/' +  youtubeUrlDirect[1] : value;
+                    var imagePreview = preview ? ('./api/file.php?id=' + moduleId + '&file=' + preview + '&width=150&height=150') : '';
                     return '<h4>' +
                         '<span>' + field.name + '</span>' +
                         '<span class="pull_right" style="height: 38px;"><span class="alert-yt-container "></span>&nbsp;</span>' +
@@ -59,7 +60,7 @@ var fieldsFactory = function()
                         '</div>' +
                         '</div>' +
                         '</div>' +
-                        '<input type="hidden" name="' + field.id + '_preview" value="' + (value.preview || '') + '" />' +
+                        '<input type="hidden" name="' + field.id + '_preview" value="' + preview + '" />' +
                         '<input class="input youtube" type="text" name="' + field.id + '" field-id="' + field.id + '" module-id="' + moduleId + '" data-id="' + dataId + '" placeholder="' + (field.placeholder || '') + '" value="' + (value || '') + '" />';
                 }
                 case "image":
