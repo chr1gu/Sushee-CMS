@@ -388,9 +388,12 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
     {
         "name": "Location",
         "id": "location",
-        "zoomLevel": 1,
-        "initialZoomLevel": 4.0,
-        "center": "46.947273, 7.447570",
+        "centerCoordinate": "46.947273, 7.447570",
+        "eyeCoordinate": "46.947273, 7.407570",
+        "eyeAltitude": 2000,
+        "heading": 0,
+        "initialEyeAltitude": 6000"
+        "initialHeading": 30
         "type": "text",
         "actions": [
             {
@@ -407,6 +410,40 @@ You can change the icon displayed in the sidemenu of each module. Just specify a
                 "action": "CANCEL"
             }
         ]
+    }
+
+### Media View Field decorators
+
+#### Static Map
+
+    {
+        "name": "Location",
+        "decorator": "staticMap",
+        ...
+    }
+    
+#### Parallax Footer Map
+
+    {
+        "name": "Location",
+        "decorator": "footerMap",
+        ...
+    }
+
+#### Hero Image
+
+    {
+        "name": "Image",
+        "decorator": "heroImage",
+        ...
+    }
+
+#### Rating
+
+    {
+        "name": "Rating",
+        "decorator": "rating",
+        ...
     }
 
 
