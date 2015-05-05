@@ -191,6 +191,16 @@ function initAjaxContent()
         img.attr('src', img.attr('data-original'));
     });
 
+    $('.reload-rtsp').click(function(){
+        $.getJSON('./api/youtube.rtsp.php', {
+            "url": $('input[name=video]').val()
+        }, function(response){
+            if (response && typeof response.rtsp === 'string') {
+                $('input[name=rtspUrl]').val(response.rtsp);
+            }
+        });
+    });
+
     // upload youtube thumbnail
     $('.youtube').blur(function(){
         var value = $(this).val();

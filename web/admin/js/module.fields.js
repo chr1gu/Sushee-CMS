@@ -60,6 +60,7 @@ var fieldsFactory = function()
                         '</div>' +
                         '</div>' +
                         '</div>' +
+                        '<div style="padding-right:100px;padding-bottom:10px;position:relative;"><input class="input" type="text" name="rtspUrl" value="" /><a style="position:absolute;right:0;width:90px;" class="reload-rtsp" href="#">Reload</a></div>' +
                         '<input type="hidden" name="' + field.id + '_preview" value="' + preview + '" />' +
                         '<input class="input youtube" type="text" name="' + field.id + '" field-id="' + field.id + '" module-id="' + moduleId + '" data-id="' + dataId + '" placeholder="' + (field.placeholder || '') + '" value="' + (value || '') + '" />';
                 }
